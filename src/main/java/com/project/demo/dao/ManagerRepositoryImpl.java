@@ -76,12 +76,8 @@ public class ManagerRepositoryImpl implements ManagerRepository
 
 
 	@Override
-	public String deleteManagerById(int id) {
-		int flag = jdbctemplate.update(deleteManagerWithId,id);
-		if(flag==1)
-			return "Manager with id " + id + " deleted successfully";
-		else
-			return " 0 0 0 ";
+	public int deleteManagerById(int id) {
+		return jdbctemplate.update(deleteManagerWithId,id);
 	}
 
 

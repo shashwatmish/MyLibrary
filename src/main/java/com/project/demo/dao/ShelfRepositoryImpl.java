@@ -51,18 +51,13 @@ public class ShelfRepositoryImpl implements ShelfRepository{
 	}
 
 	@Override
-	public String deleteShelfById(int id) {
-		int flag = jdbctemplate.update(deleteShelfWithId,id);
-		if(flag==1)
-			return "Shelf with id " + id + " deleted successfully";
-		else
-			return " 0 0 0 ";
+	public int deleteShelfById(int id) {
+		return jdbctemplate.update(deleteShelfWithId,id);
 	}
 
 	@Override
-	public Shelf updateShelf(Shelf shelf) {
-		jdbctemplate.update(updateShelf,shelf.getHandler(),shelf.getFloor(),shelf.getDescription(),shelf.getShelfid());
-		return shelf;
+	public int updateShelf(Shelf shelf) {
+		return jdbctemplate.update(updateShelf,shelf.getHandler(),shelf.getFloor(),shelf.getDescription(),shelf.getShelfid());
 	}
 	
 }

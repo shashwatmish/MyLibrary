@@ -32,6 +32,11 @@ public class StudentController {
 		return ;		
 	}
 	
+	public void logout(HttpSession session) {
+		//session.removeAttribute("student");
+		session.invalidate();
+	}
+	
 	public boolean is_manager(HttpSession session) {
 		if(session.getAttribute("manager")==null) return false;
 		else return true;
@@ -62,27 +67,124 @@ public class StudentController {
 	}
 	
 	@GetMapping("/getstudent/{id}")
-	public @ResponseBody Student ShowStudent(@PathVariable("id") int id)
+	public @ResponseBody String ShowStudent(@PathVariable("id") int id,Model model)
 	{
-		return studentrepo.getStudentById(id);
+		Student student = studentrepo.getStudentById(id);
+		model.addAttribute("StudentQuery",student);
+		return "Student";
 	}
 	
 	@GetMapping("/getstudents")
-	public @ResponseBody List<Student> ShowStudents()
+	public @ResponseBody String ShowStudents(Model model)
 	{
-		return studentrepo.getAllStudents();
+		//return studentrepo.getAllStudents();
+		List<Student> list = studentrepo.getAllStudents();
+		model.addAttribute("qresult",list);
+		return "Students";
 	}
 	
 	@PutMapping("/updatestudent")
-	public @ResponseBody Student UpdateStudent(@RequestBody Student student)
+	public @ResponseBody String UpdateStudent(@RequestBody Student student,Model model, HttpSession session)
 	{
-		return studentrepo.updateStudent(student);
+		if(!is_student(session) && !is_manager(session))
+		{
+			model.addAttribute("error","LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING");
+			return "LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING";
+			// return "home";
+		}
+		
+		if(is_manager(session))
+		{
+			int dept = (int)session.getAttribute("Dept");
+			if(dept!=103)
+			{
+				model.addAttribute("error","LOGIN AS A STUDENT OR MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING");
+				return "LOGIN AS A STUDENT OR MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING";
+				// return "home";
+			}
+		}
+		
+		if(is_student(session))
+		{
+			int id = student.getStudentId();
+			Student cur_Student = (Student)session.getAttribute("student");
+			int cur_id = cur_Student.getStudentId();
+			
+			if(cur_id!=id)
+			{
+				model.addAttribute("error","YOU CAN'T UPDATE OTHER STUDENTS DETAILS");
+				return "YOU CAN'T UPDATE OTHER STUDENTS DETAILS";
+				// return "home";
+			}
+		}
+		
+		int flag = studentrepo.updateStudent(student);
+		if(flag!=1)
+		{
+			model.addAttribute("error", "SOMETHING WENT WRONG, PLEASE TRY AGAIN");
+			return "SOMETHING WENT WRONG, PLEASE TRY AGAIN";
+			//return "home";
+		}
+		
+		model.addAttribute("error","SUCCESS UPDATION OF DETAILS");
+		return "SUCCESSFUL UPDATION OF DETAILS";
+		//return "home";
 	}
 	
 	@DeleteMapping("/deletestudent/{id}")
-	public @ResponseBody String Deletestudent(@PathVariable("id") int id)
+	public @ResponseBody String Deletestudent(@PathVariable("id") int id,Model model,HttpSession session)
 	{
-		return studentrepo.deleteStudentById(id);
+		if(!is_student(session) && !is_manager(session))
+		{
+			model.addAttribute("error","LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING");
+			return "LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING";
+			// return "home";
+		}
+		
+		if(is_manager(session))
+		{
+			int dept = (int)session.getAttribute("Dept");
+			if(dept!=103)
+			{
+				model.addAttribute("error","LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING");
+				return "LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING";
+				// return "home";
+			}
+		}
+		
+		if(is_student(session))
+		{
+			Student cur_Student = (Student)session.getAttribute("student");
+			int cur_id = cur_Student.getStudentId();
+			
+			if(cur_id!=id)
+			{
+				model.addAttribute("error","YOU CAN'T UPDATE OTHER STUDENTS DETAILS");
+				return "YOU CAN'T UPDATE OTHER STUDENTS DETAILS";
+				// return "home";
+			}
+		}
+		
+		int flag = studentrepo.deleteStudentById(id);
+		if(flag!=1)
+		{
+			model.addAttribute("error", "SOMETHING WENT WRONG, PLEASE TRY AGAIN");
+			return "SOMETHING WENT WRONG, PLEASE TRY AGAIN";
+			//return "home";
+		}
+		
+		if(is_student(session))
+		{
+			logout(session);
+			model.addAttribute("error","SUCCESSFUL DELETION OF DETAILS AND YOU WERE LOGGED OUT");
+			return "SUCCESSFUL DELETION OF DETAILS";
+			// return "home";
+		}
+			
+		model.addAttribute("error","SUCCESSFUL DELETION OF DETAILS AND YOU WERE LOGGED OUT");
+		return "SUCCESSFUL DELETION OF DETAILS";
+		//return "home";
+		//return 
 	}
 	
 	@PostMapping("/student/login")
@@ -134,16 +236,6 @@ public class StudentController {
 		login(session,student);
 
 		model.addAttribute("error","SUCCESS !!!");
-		return "home";
-	}
-	
-	@GetMapping("/student/logout")
-	public String logout(HttpSession session,Model model) {
-
-		session.removeAttribute("student");
-		session.invalidate();
-		model.addAttribute("error","LOGGED OUT SUCCESSFULLY !!");
-
 		return "home";
 	}
 }

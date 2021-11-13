@@ -1,0 +1,44 @@
+nav {
+	width: 100%; 
+	background-color: #007BFF; 
+	display: flex;
+	justify-content: space-between;
+	height:70px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.logo {
+	padding: 20px; 
+	text-decoration: none;
+	color: #fff;
+	text-transform: uppercase;
+}
+nav .nav-bar {
+	padding: 20px; 
+	display: flex; 
+}
+nav .nav-bar .nav-bar_item {
+	list-style-type: none;
+	padding: 0px 20px;
+}
+nav .nav-bar .nav-bar_item a {
+	position: relative;
+	display: block; 
+	padding-bottom: 5px;
+	text-decoration: none;
+	color: #fff;
+	text-transform: uppercase;
+}
+nav .nav-bar .nav-bar_item a:after {
+	content: "";
+	position: absolute;
+	width: 0%;
+	height: 2px;
+	bottom: 0;
+	left: 0;
+	background-color: #007BFF;
+	transition: 0.1s ease-in-out;
+}
+nav .nav-bar .nav-bar_item a:hover:after {
+	width: 100%;
+}

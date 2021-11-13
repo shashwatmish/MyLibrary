@@ -8,6 +8,6 @@ public interface StudentRepository {
 	Student saveStudent(Student student);
 	Student getStudentById(int id);
 	List<Student> getAllStudents();
-	Student updateStudent(Student student);
-	String deleteStudentById(int id);
+	int updateStudent(Student student);
+	int deleteStudentById(int id);
 }

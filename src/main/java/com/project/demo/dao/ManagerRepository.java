@@ -9,5 +9,5 @@ public interface ManagerRepository {
 	Manager getManagerById(int id);
 	List<Manager> getAllManagers();
 	Manager updateManager(Manager manager);
-	String deleteManagerById(int id);
+	int deleteManagerById(int id);
 }

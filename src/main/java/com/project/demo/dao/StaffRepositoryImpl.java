@@ -72,14 +72,13 @@ public class StaffRepositoryImpl implements StaffRepository
 	}
 
 	@Override
-	public String deleteStaffById(int id) {
-		jdbctemplate.update(deleteStaffById,id);
-		return "Staff with id " + id + " deleted successfully";
+	public int deleteStaffById(int id) {
+		return jdbctemplate.update(deleteStaffById,id);
 	}
 
 	@Override
-	public Staff updateStaff(Staff staff) {
-		jdbctemplate.update(updateStaff,staff.getFname(),
+	public int updateStaff(Staff staff) {
+		return jdbctemplate.update(updateStaff,staff.getFname(),
 				staff.getLname(),
 				staff.getPassword(),
 				staff.getGender(),
@@ -90,7 +89,6 @@ public class StaffRepositoryImpl implements StaffRepository
 				staff.getPincode(),
 				staff.getHandlesShelf(),
 				staff.getStaffid());
-		return staff;
 	}
 
 }

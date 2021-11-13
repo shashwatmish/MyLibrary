@@ -29,7 +29,14 @@ public class ManagerController {
 	
 	public void login(HttpSession session,Manager manager) {
 		session.setAttribute("manager", manager);
+		session.setAttribute("Dept", manager.getDeptid());
 		return ;		
+	}
+	
+	public void logout(HttpSession session) {
+		// session.removeAttribute("manager");
+		// session.removeAttribute("Dept");
+		session.invalidate();
 	}
 	
 	public boolean is_manager(HttpSession session) {
@@ -57,31 +64,87 @@ public class ManagerController {
 		
 		manager =  managerrepo.saveManager(manager);
 		model.addAttribute("Managerid",true);
-		return "home";
+		return "Managers";
 	}
 	
 	@GetMapping("/getmanager/{id}")
-	public @ResponseBody Manager ShowManagerById(@PathVariable("id") int id)
+	public @ResponseBody String ShowManagerById(@PathVariable("id") int id,Model model)
 	{
-		return managerrepo.getManagerById(id);
+		Manager manager = managerrepo.getManagerById(id);
+		model.addAttribute("ManagerQuery",manager);
+		return "Manager";
 	}
 	
 	@GetMapping("/getmanagers")
-	public @ResponseBody List<Manager> ShowManagers()
+	public @ResponseBody String ShowManagers(Model model)
 	{
-		return managerrepo.getAllManagers();
+		List<Manager> list=  managerrepo.getAllManagers();
+		model.addAttribute("qresult",list);
+		return "home";
 	}
 	
 	@DeleteMapping("/deletemanager/{id}")
-	public @ResponseBody String DeleteManagerById(@PathVariable("id") int id)
+	public @ResponseBody String DeleteManagerById(@PathVariable("id") int id,Model model,HttpSession session)
 	{
-		return managerrepo.deleteManagerById(id);
+		if(!is_manager(session))
+		{
+			model.addAttribute("error","LOGIN AS A MANAGER BEFORE DELETING");
+			return "LOGIN AS A MANAGER BEFORE UPDATING";
+			//return "home";
+		}
+		
+		Manager cur_manager = (Manager)session.getAttribute("manager");
+		int cur_id = cur_manager.getManagerid();
+		
+		if(id!=cur_id)
+		{
+			model.addAttribute("error","YOU CAN'T DELETE OTHER'S DETAILS");
+			return "YOU CAN'T DELETE OTHER'S DETAILS";
+			//return "home";
+		}
+		
+		
+		int flag = managerrepo.deleteManagerById(id);
+		
+		if(flag!=1)
+		{
+			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
+			return "SOMETHING WENT WRONG, PLEASE TRY AGAIN";
+			//return "home";
+		}
+		
+		logout(session);
+		model.addAttribute("error","DETAILS DELETED SUCCESSFULLY AND YOU WERE LOGGED OUT");
+		return "DETAILS DELETED SUCCESSFULLY AND YOU WERE LOGGED OUT";
+		//return "home";
 	}
 	
 	@PutMapping("/updatemanager")
-	public @ResponseBody Manager UpdateManager(@RequestBody Manager manager)
+	public @ResponseBody String UpdateManager(@RequestBody Manager manager,Model model,HttpSession session)
 	{
-		return managerrepo.updateManager(manager);
+		if(!is_manager(session))
+		{
+			model.addAttribute("error","LOGIN AS A MANAGER BEFORE UPDATING");
+			return "LOGIN AS A MANAGER BEFORE UPDATING";
+			//return "home";
+		}
+		
+		int id = manager.getManagerid();
+		Manager cur_manager = (Manager)session.getAttribute("manager");
+		int cur_id = cur_manager.getManagerid();
+		
+		if(id!=cur_id)
+		{
+			model.addAttribute("error","YOU CAN'T UPDATE OTHER'S DETAILS");
+			return "YOU CAN'T UPDATE OTHER'S DETAILS";
+			//return "home";
+		}
+		
+		managerrepo.updateManager(manager);
+		
+		model.addAttribute("error","DETAILS UPDATED SUCCESSFULLY");
+		return "DETAILS UPDATED SUCCESSFULLY";
+		//return "home";
 	}
 	
 	@PostMapping("/manager/login")
@@ -134,15 +197,5 @@ public class ManagerController {
 
 		model.addAttribute("error","SUCCESS !!");
 		return "home";	
-	}
-	
-	@GetMapping("/manager/logout")
-	public @ResponseBody String logout(HttpSession session,Model model) {
-
-		session.removeAttribute("manager");
-		session.invalidate();
-		model.addAttribute("error","LOGGED OUT SUCCESSFULLY !!");
-
-		return "home";
 	}
 }

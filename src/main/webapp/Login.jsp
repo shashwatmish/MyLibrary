@@ -39,6 +39,12 @@ body {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
 		crossorigin="anonymous"></script>
+		
+		<script>
+		function myFunction(var error) {
+		  alert(error);
+		}
+		</script>
 
 	<!-- Option 2: jQuery, Popper.js, and Bootstrap JS
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -47,12 +53,17 @@ body {
     -->
 
 		<c:if test="${ error ne null }">
-		<div class="alert alert-warning alert-dismissible" role="alert">
-			<span type="button" class="close" data-dismiss="alert"
-				aria-label="Close"><span aria-hidden="true">&times;</span></span> <strong>
-				${error }</strong>
-		</div>
-	</c:if>
+			<div class="alert alert-warning alert-dismissible" role="alert">
+				<span type="button" class="close" data-dismiss="alert"
+					aria-label="Close"><span aria-hidden="true">&times;</span></span> <strong>
+					${error }</strong>
+			</div>
+			<!-- 
+			<script>
+				  myFunction(error);
+			</script>
+			-->
+		</c:if>
 	
 	<!-- <p
 		style="color: #fff; font-size: xxx-large; left: 40%; position: absolute; top: 50%;">Libro-Pro</p>

@@ -19,7 +19,7 @@
 	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
 <div class="p-3 mb-2 bg-primary text-white" style="text-align: center;">
-	<h3>Register As sManager!</h3>
+	<h3>Register As Manager!</h3>
 </div>
 <div class="container">
 

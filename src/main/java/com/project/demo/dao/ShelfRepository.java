@@ -8,8 +8,8 @@ public interface ShelfRepository {
 	Shelf saveShelf(Shelf shelf);
 	Shelf getShelfById(int id);
 	List<Shelf> getAllShelves();
-	Shelf updateShelf(Shelf shelf);
-	String deleteShelfById(int id);
+	int updateShelf(Shelf shelf);
+	int deleteShelfById(int id);
 }
 
 

@@ -4,9 +4,9 @@ import java.util.List;
 import com.project.demo.models.Retailer;
 
 public interface RetailerRepository {
-	Retailer saveRetailer(Retailer retailer);
+	int saveRetailer(Retailer retailer);
 	Retailer getRetailerById(int id);
 	List<Retailer> getAllRetailers();
-	Retailer updateRetailer(Retailer retailer);
-	String deleteRetailerById(int id);
+	int updateRetailer(Retailer retailer);
+	int deleteRetailerById(int id);
 }

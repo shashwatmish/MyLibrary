@@ -9,5 +9,5 @@ public interface StockRepository {
 	Stock getStock(String title, String author, String publications);
 	List<Stock> getAllStocks();
 	Stock updateStock(Stock stock);
-	String deleteStockById(String title, String author, String publications);
+	int deleteStockById(String title, String author, String publications);
 }

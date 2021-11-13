@@ -21,9 +21,8 @@ public class RetailerRepositoryImpl implements RetailerRepository
 	public static final String deleteRetailerWithId = "DELETE FROM RETAILER WHERE RETAILERID=?";
 
 	@Override
-	public Retailer saveRetailer(Retailer retailer) {
-		jdbctemplate.update(saveRetailer,retailer.getFname(),retailer.getLname(),retailer.getContact(),retailer.getEmail());
-		return retailer;
+	public int saveRetailer(Retailer retailer) {
+		return jdbctemplate.update(saveRetailer,retailer.getFname(),retailer.getLname(),retailer.getContact(),retailer.getEmail());
 	}
 
 	@Override
@@ -55,18 +54,13 @@ public class RetailerRepositoryImpl implements RetailerRepository
 	}
 
 	@Override
-	public String deleteRetailerById(int id) {
-		int flag = jdbctemplate.update(deleteRetailerWithId,id);
-		if(flag==1)
-			return "Retailer with id " + id + " deleted successfully";
-		else
-			return " 0 0 0 ";
+	public int deleteRetailerById(int id) {
+		return jdbctemplate.update(deleteRetailerWithId,id);
 	}
 
 	@Override
-	public Retailer updateRetailer(Retailer retailer) {
-		jdbctemplate.update(updateRetailer,retailer.getFname(),retailer.getLname(),retailer.getContact(),retailer.getEmail(),retailer.getRetailerid());
-		return retailer;
+	public int  updateRetailer(Retailer retailer) {
+		return jdbctemplate.update(updateRetailer,retailer.getFname(),retailer.getLname(),retailer.getContact(),retailer.getEmail(),retailer.getRetailerid());
 	}
 
 }

@@ -20,24 +20,30 @@ public class BookRepositoryImpl implements BookRepository{
 	JdbcTemplate jdbctemplate;
 
 	@Override
-	public Book saveBook(Book book) {
-		jdbctemplate.update(AddBook,book.getShelfid(),book.getTitle(),book.getAuthor(),book.getPublications(),book.isIsissued(),book.getLanguage());
-		return book;
+	public int saveBook(Book book) {
+		return jdbctemplate.update(AddBook,book.getShelfid(),book.getTitle(),book.getAuthor(),book.getPublications(),book.isIsissued(),book.getLanguage());
 	}
 
 	@Override
 	public Book getBookById(int id) {
-		return jdbctemplate.queryForObject(getBookById,(rs,rowNum)->{
+		try {
+			return jdbctemplate.queryForObject(getBookById,(rs,rowNum)->{
+				Book book = new Book();
+				book.setBookid(rs.getInt(1));
+				book.setShelfId(rs.getInt(2));
+				book.setTitle(rs.getString(3));
+				book.setAuthor(rs.getString(4));
+				book.setPublications(rs.getString(5));
+				book.setIs_issued(rs.getBoolean(6));
+				book.setLanguage(rs.getString(7));
+				return book;
+			},id);
+		}
+		catch(Exception e) {
 			Book book = new Book();
-			book.setBookid(rs.getInt(1));
-			book.setShelfId(rs.getInt(2));
-			book.setTitle(rs.getString(3));
-			book.setAuthor(rs.getString(4));
-			book.setPublications(rs.getString(5));
-			book.setIs_issued(rs.getBoolean(6));
-			book.setLanguage(rs.getString(7));
+			book.setBookid(-1);
 			return book;
-		},id);
+		}
 	}
 
 	@Override
@@ -56,26 +62,14 @@ public class BookRepositoryImpl implements BookRepository{
 	}
 
 	@Override
-	public String deleteBookById(int id) {
-		int flag = jdbctemplate.update(DeleteBookById,id);
-		if(flag==1)
-			return "Book with id " + id +" deleted successfully";
-		else
-			return " 0 0 0 ";
+	public int deleteBookById(int id) {
+		return jdbctemplate.update(DeleteBookById,id);
 	}
 
 	@Override
-	public Book updateBook(Book book) {
-		jdbctemplate.update(updateBook,
-				book.getShelfid(),
-				book.getTitle(),
-				book.getAuthor(),
-				book.getPublications(),
-				book.isIsissued(),
-				book.getLanguage(),
-				book.getBookid());
+	public int updateBook(Book book) {
+		return jdbctemplate.update(updateBook,book.getShelfid(),book.getTitle(),book.getAuthor(),book.getPublications(),book.isIsissued(),book.getLanguage(),book.getBookid());
 		
-		return book;
 	}
 
 }

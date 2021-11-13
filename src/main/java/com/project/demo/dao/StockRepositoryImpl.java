@@ -52,12 +52,8 @@ public class StockRepositoryImpl implements StockRepository{
 	}
 
 	@Override
-	public String deleteStockById(String title, String author, String publications) {
-		int flag = jdbctemplate.update(DeleteStock,title,author,publications);
-		if(flag==1)
-			return "Stock deleted successfully";
-		else
-			return " 0 0 0 ";
+	public int deleteStockById(String title, String author, String publications) {
+		return jdbctemplate.update(DeleteStock,title,author,publications);
 	}
 
 	@Override

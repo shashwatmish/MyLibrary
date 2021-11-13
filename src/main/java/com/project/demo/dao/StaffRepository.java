@@ -8,6 +8,6 @@ public interface StaffRepository {
 	Staff saveStaff(Staff staff);
 	Staff getStaffById(int id);
 	List<Staff> getAllStaffs();
-	Staff updateStaff(Staff staff);
-	String deleteStaffById(int id);
+	int updateStaff(Staff staff);
+	int deleteStaffById(int id);
 }

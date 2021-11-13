@@ -75,8 +75,8 @@ public class StudentRepositoryImpl implements StudentRepository
 	}
 	
 	@Override
-	public Student updateStudent(Student student) {
-		jdbctemplate.update(UpdateStudent,
+	public int updateStudent(Student student) {
+		return jdbctemplate.update(UpdateStudent,
 				student.getFname(),
 				student.getLname(),
 				student.getPassword(),
@@ -89,13 +89,11 @@ public class StudentRepositoryImpl implements StudentRepository
 				student.getBooksIssued(),
 				student.getGender(),
 				student.getStudentId());
-		return student;
 	}
 
 	@Override
-	public String deleteStudentById(int id) {
-		jdbctemplate.update(deleteStudentById,id);
-		return "Student with id " + id + " deleted successfully";
+	public int deleteStudentById(int id) {
+		return jdbctemplate.update(deleteStudentById,id);
 	}
 
 }
