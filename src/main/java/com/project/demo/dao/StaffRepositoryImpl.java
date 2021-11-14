@@ -21,9 +21,8 @@ public class StaffRepositoryImpl implements StaffRepository
 	private JdbcTemplate jdbctemplate;
 	
 	@Override
-	public Staff saveStaff(Staff staff) {
-		jdbctemplate.update(saveStaff,staff.getFname(),staff.getLname(),staff.getPassword(),staff.getGender(),staff.getContact(),staff.getEmail(),staff.getStreet(),staff.getArea(),staff.getPincode(),staff.getHandlesShelf());
-		return staff;
+	public int saveStaff(Staff staff) {
+		return jdbctemplate.update(saveStaff,staff.getFname(),staff.getLname(),staff.getPassword(),staff.getGender(),staff.getContact(),staff.getEmail(),staff.getStreet(),staff.getArea(),staff.getPincode(),staff.getHandlesshelf());
 	}
 
 	@Override
@@ -41,7 +40,7 @@ public class StaffRepositoryImpl implements StaffRepository
 				staff.setStreet(rs.getString(8));
 				staff.setArea(rs.getString(9));
 				staff.setPincode(rs.getLong(10));
-				staff.setHandlesShelf(rs.getInt(11));
+				staff.setHandlesshelf(rs.getInt(11));
 				return staff;
 			},id);
 		}
@@ -66,7 +65,7 @@ public class StaffRepositoryImpl implements StaffRepository
 			staff.setStreet(rs.getString(8));
 			staff.setArea(rs.getString(9));
 			staff.setPincode(rs.getLong(10));
-			staff.setHandlesShelf(rs.getInt(11));
+			staff.setHandlesshelf(rs.getInt(11));
 			return staff;
 		});
 	}
@@ -87,7 +86,7 @@ public class StaffRepositoryImpl implements StaffRepository
 				staff.getStreet(),
 				staff.getArea(),
 				staff.getPincode(),
-				staff.getHandlesShelf(),
+				staff.getHandlesshelf(),
 				staff.getStaffid());
 	}
 

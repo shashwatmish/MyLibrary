@@ -14,15 +14,15 @@ public class StockRepositoryImpl implements StockRepository{
 	private static final String AddStock = "INSERT INTO STOCK(title,author,publications,booksavailable,booksissued) VALUES(?,?,?,?,?)";
 	private static final String GetAllStock = "SELECT * FROM STOCK";
 	private static final String getStockById = "SELECT * FROM STOCK WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)";
-	private static final String updateStock = "UPDATE STOCK SET booksavailable=?,booksissued=? WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)";
+	private static final String updateStock = "UPDATE STOCK SET booksavailable=? WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)";
 	private static final String DeleteStock = "DELETE FROM STOCK WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)" ;
 	@Autowired
 	JdbcTemplate jdbctemplate;
 	
 	@Override
-	public Stock saveStock(Stock stock) {
-		jdbctemplate.update(AddStock,stock.getTitle(),stock.getAuthor(),stock.getPublications(),stock.getBooksavailable(),stock.getBooksissued());
-		return stock;
+	public int saveStock(Stock stock) {
+		return jdbctemplate.update(AddStock,stock.getTitle(),stock.getAuthor(),stock.getPublications(),stock.getBooksavailable(),stock.getBooksissued());
+		
 	}
 
 	@Override
@@ -40,15 +40,22 @@ public class StockRepositoryImpl implements StockRepository{
 	
 	@Override
 	public Stock getStock(String title, String author, String publications) {
-		return jdbctemplate.queryForObject(getStockById,(rs,rowNum)->{
+		try {
+			return jdbctemplate.queryForObject(getStockById,(rs,rowNum)->{
+				Stock stock = new Stock();
+				stock.setTitle(rs.getString(1));
+				stock.setAuthor(rs.getString(2));
+				stock.setPublications(rs.getString(3));
+				stock.setBooksavailable(rs.getInt(4));
+				stock.setBooksissued(rs.getInt(5));
+				return stock;
+			},title,author,publications);
+		}
+		catch(Exception e) {
 			Stock stock = new Stock();
-			stock.setTitle(rs.getString(1));
-			stock.setAuthor(rs.getString(2));
-			stock.setPublications(rs.getString(3));
-			stock.setBooksavailable(rs.getInt(4));
-			stock.setBooksissued(rs.getInt(5));
+			stock.setBooksavailable(-1);
 			return stock;
-		},title,author,publications);
+		}
 	}
 
 	@Override
@@ -60,7 +67,6 @@ public class StockRepositoryImpl implements StockRepository{
 	public Stock updateStock(Stock stock) {
 		jdbctemplate.update(updateStock,
 				stock.getBooksavailable(),
-				stock.getBooksissued(),
 				stock.getTitle(),
 				stock.getAuthor(),
 				stock.getPublications());

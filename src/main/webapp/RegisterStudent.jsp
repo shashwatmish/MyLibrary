@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 <link
@@ -9,6 +8,11 @@
 	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	function validateForm() {
+		var form = document.getElementById("form");
+	}
+</script>	
 <!------ Include the above in your HEAD tag ---------->
 
 <link rel="stylesheet"
@@ -23,7 +27,7 @@
 		<div class="col-md-6">
 			<div class="card">
 				<article class="card-body">
-					<form action="/registerstudent" method="post" modelAttribute="student">
+					<form id="form" action="/registerstudent" method="post" modelAttribute="student">
 						<div class="form-row">
 							<div class="col form-group">
 								<label>First Name </label> <input name="fname" type="text"

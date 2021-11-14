@@ -5,7 +5,7 @@ import java.util.List;
 import com.project.demo.models.Staff;
 
 public interface StaffRepository {
-	Staff saveStaff(Staff staff);
+	int saveStaff(Staff staff);
 	Staff getStaffById(int id);
 	List<Staff> getAllStaffs();
 	int updateStaff(Staff staff);

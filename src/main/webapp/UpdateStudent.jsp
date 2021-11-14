@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 <link
@@ -11,7 +12,6 @@
 <script>
 	function validateForm() {
 		var form = document.getElementById("form");
-		
 	}
 </script>
 <!------ Include the above in your HEAD tag ---------->
@@ -19,7 +19,7 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-<div class="p-3 mb-2 bg-primary text-white"  style="text-align:center;"><h3>Register As Staff!</h3></div>
+<div class="p-3 mb-2 bg-primary text-white"  style="text-align:center;"><h3>Update Student Details</h3></div>
 <div class="container">
 
 
@@ -28,7 +28,15 @@
 		<div class="col-md-6">
 			<div class="card">
 				<article class="card-body">
-					<form id="form" action="/registerstaff" method="post" modelAttribute="staff">
+					<form id="form" action="/updatestudent" method="post" modelAttribute="student">
+					
+					<div class="form-row">
+							<div class="col form-group">
+								<label>Student ID (of the student whose details have to be updated)</label> <input name="studentid" type="text"
+									class="form-control" placeholder="" required>
+							</div>
+						</div>
+						
 						<div class="form-row">
 							<div class="col form-group">
 								<label>First Name </label> <input name="fname" type="text"
@@ -44,8 +52,13 @@
 						</div>
 						
 						<div class="form-group">
-							<label>Create password</label> <input class="form-control"
+							<label>Change password</label> <input class="form-control"
 								name="password" type="password" required>
+						</div>
+						
+						<div class="form-group">
+							<label>Age</label> <input class="form-control"
+								name="age" type="text" required>
 						</div>
 						
 						<div class="form-group">
@@ -73,6 +86,11 @@
 								class="form-control" placeholder="" required>
 						</div>
 						
+						<div class="form-group">
+							<label>No. of Books Issued </label> <input type="text" name="booksIssued"
+								class="form-control" placeholder="" required>
+						</div>
+						
 						<!-- form-group end.// -->
 						<div class="form-group">
 							<label class="form-check form-check-inline"> <input
@@ -86,16 +104,9 @@
 						
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary btn-block">
-								Register</button>
+								Update</button>
 						</div>
-
-
-
-						<!-- form-group// -->
-						<small class="text-muted">By clicking the 'Sign Up'
-							button, you confirm that you accept our <br> Terms of use
-							and Privacy Policy.
-						</small>
+						
 					</form>
 				</article>
 				<!-- card-body end .// -->

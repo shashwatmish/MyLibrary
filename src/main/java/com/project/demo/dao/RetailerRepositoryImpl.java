@@ -27,16 +27,23 @@ public class RetailerRepositoryImpl implements RetailerRepository
 
 	@Override
 	public Retailer getRetailerById(int id) {
-		return jdbctemplate.queryForObject(getRetailerById,(rs,rowNum)->{
+		try {
+			return jdbctemplate.queryForObject(getRetailerById,(rs,rowNum)->{
+				Retailer retailer = new Retailer();
+				retailer.setRetailerid(rs.getInt(1));
+				retailer.setFname(rs.getString(2));
+				retailer.setLname(rs.getString(3));
+				retailer.setContact(rs.getString(4));
+				retailer.setEmail(rs.getString(5));
+				
+				return retailer;
+			},id);
+		}
+		catch(Exception e) {
 			Retailer retailer = new Retailer();
-			retailer.setRetailerid(rs.getInt(1));
-			retailer.setFname(rs.getString(2));
-			retailer.setLname(rs.getString(3));
-			retailer.setContact(rs.getString(4));
-			retailer.setEmail(rs.getString(5));
-			
+			retailer.setRetailerid(-1);
 			return retailer;
-		},id);
+		}
 	}
 
 	@Override

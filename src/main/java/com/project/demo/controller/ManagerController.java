@@ -34,8 +34,6 @@ public class ManagerController {
 	}
 	
 	public void logout(HttpSession session) {
-		// session.removeAttribute("manager");
-		// session.removeAttribute("Dept");
 		session.invalidate();
 	}
 	
@@ -62,35 +60,46 @@ public class ManagerController {
 			return "home";		
 		}
 		
-		manager =  managerrepo.saveManager(manager);
+		int flag = managerrepo.saveManager(manager);
+		if(flag!=1)
+		{
+			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
+			return "home";
+		}
+		
 		model.addAttribute("Managerid",true);
-		return "Managers";
-	}
-	
-	@GetMapping("/getmanager/{id}")
-	public @ResponseBody String ShowManagerById(@PathVariable("id") int id,Model model)
-	{
-		Manager manager = managerrepo.getManagerById(id);
-		model.addAttribute("ManagerQuery",manager);
-		return "Manager";
-	}
-	
-	@GetMapping("/getmanagers")
-	public @ResponseBody String ShowManagers(Model model)
-	{
-		List<Manager> list=  managerrepo.getAllManagers();
-		model.addAttribute("qresult",list);
 		return "home";
 	}
 	
-	@DeleteMapping("/deletemanager/{id}")
-	public @ResponseBody String DeleteManagerById(@PathVariable("id") int id,Model model,HttpSession session)
+	@GetMapping("/getmanager")
+	public String ShowManagerById(@RequestParam("id") int id,Model model)
+	{
+		Manager manager = managerrepo.getManagerById(id);
+		if(manager.getManagerid()==-1)
+		{
+			model.addAttribute("error","MANAGER DOESN'T EXIST");
+			return "Managers";
+		}
+		model.addAttribute("qq",manager);
+		return "Managers";
+	}
+	
+	@GetMapping("/getmanagers")
+	public String ShowManagers(Model model,HttpSession session)
+	{		
+		List<Manager> list=  managerrepo.getAllManagers();
+		model.addAttribute("qresult",list);
+		return "Managers";
+	}
+	
+	@PostMapping("/deletemanager")
+	public String DeleteManagerById(@RequestParam("id") int id,Model model,HttpSession session)
 	{
 		if(!is_manager(session))
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER BEFORE DELETING");
-			return "LOGIN AS A MANAGER BEFORE UPDATING";
-			//return "home";
+			//return "LOGIN AS A MANAGER BEFORE UPDATING";
+			return "home";
 		}
 		
 		Manager cur_manager = (Manager)session.getAttribute("manager");
@@ -98,9 +107,9 @@ public class ManagerController {
 		
 		if(id!=cur_id)
 		{
-			model.addAttribute("error","YOU CAN'T DELETE OTHER'S DETAILS");
-			return "YOU CAN'T DELETE OTHER'S DETAILS";
-			//return "home";
+			model.addAttribute("error","YOU CAN'T DELETE DETAILS OF OTHER MANAGERS");
+			//return "YOU CAN'T DELETE OTHER'S DETAILS";
+			return "home";
 		}
 		
 		
@@ -109,24 +118,30 @@ public class ManagerController {
 		if(flag!=1)
 		{
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
-			return "SOMETHING WENT WRONG, PLEASE TRY AGAIN";
-			//return "home";
+			//return "SOMETHING WENT WRONG, PLEASE TRY AGAIN";
+			return "home";
 		}
 		
 		logout(session);
 		model.addAttribute("error","DETAILS DELETED SUCCESSFULLY AND YOU WERE LOGGED OUT");
-		return "DETAILS DELETED SUCCESSFULLY AND YOU WERE LOGGED OUT";
-		//return "home";
+		// return "DETAILS DELETED SUCCESSFULLY AND YOU WERE LOGGED OUT";
+		return "home";
 	}
 	
-	@PutMapping("/updatemanager")
-	public @ResponseBody String UpdateManager(@RequestBody Manager manager,Model model,HttpSession session)
+	@GetMapping("/updatemanager")
+	public String UpdateManager()
+	{
+		return "UpdateManager";
+	}
+	
+	@PostMapping("/updatemanager")
+	public String UpdateManager(@ModelAttribute("manager") Manager manager,Model model,HttpSession session)
 	{
 		if(!is_manager(session))
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER BEFORE UPDATING");
-			return "LOGIN AS A MANAGER BEFORE UPDATING";
-			//return "home";
+			// return "LOGIN AS A MANAGER BEFORE UPDATING";
+			return "home";
 		}
 		
 		int id = manager.getManagerid();
@@ -135,16 +150,16 @@ public class ManagerController {
 		
 		if(id!=cur_id)
 		{
-			model.addAttribute("error","YOU CAN'T UPDATE OTHER'S DETAILS");
-			return "YOU CAN'T UPDATE OTHER'S DETAILS";
-			//return "home";
+			model.addAttribute("error","YOU CAN'T UPDATE DETAILS OF OTHER MANAGERS");
+			// return "YOU CAN'T UPDATE OTHER'S DETAILS";
+			return "home";
 		}
 		
 		managerrepo.updateManager(manager);
 		
 		model.addAttribute("error","DETAILS UPDATED SUCCESSFULLY");
-		return "DETAILS UPDATED SUCCESSFULLY";
-		//return "home";
+		// return "DETAILS UPDATED SUCCESSFULLY";
+		return "home";
 	}
 	
 	@PostMapping("/manager/login")

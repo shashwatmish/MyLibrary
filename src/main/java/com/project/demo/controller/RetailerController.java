@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.demo.dao.RetailerRepository;
@@ -40,21 +41,33 @@ public class RetailerController {
 		else return true;
 	}
 	
+	@GetMapping("/registerretailer")
+	public String saveRetailer()
+	{
+		return "AddRetailer";
+	}
+	
+	@GetMapping("/updateretailer")
+	public String updateRetailer()
+	{
+		return "UpdateRetailer";
+	}
+	
 	@PostMapping("/registerretailer")
-	public @ResponseBody String saveRetailer(@RequestBody Retailer retailer,HttpSession session,Model model)
+	public String saveRetailer(@ModelAttribute("retailer") Retailer retailer,HttpSession session,Model model)
 	{
 		if(is_student(session) || is_staff(session))
 		{
 			model.addAttribute("error","NOT AUTHORISED TO ADD RETAILER DETAILS");
-			return "NOT AUTHORISED TO ADD RETAILER DETAILS";
-			//return "home";
+			//return "NOT AUTHORISED TO ADD RETAILER DETAILS";
+			return "home";
 		}
 		
 		if(!is_manager(session))
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE INSERTING");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE INSERTING";
-			//return "Login";		
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE INSERTING";
+			return "Login";		
 		}
 		
 		Manager manager = (Manager)session.getAttribute("manager");
@@ -63,8 +76,8 @@ public class RetailerController {
 		if(id!=102)
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE INSERTING");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE INSERTING";
-			//return "Login";
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE INSERTING";
+			return "Login";
 		}
 		
 		int flag = retailerrepo.saveRetailer(retailer);
@@ -72,30 +85,30 @@ public class RetailerController {
 		if(flag!=1)
 		{
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN ");
-			return "SOMETHING WENT WRONG, PLEASE TRY AGAIN ";
-			//return "home";
+			//return "SOMETHING WENT WRONG, PLEASE TRY AGAIN ";
+			return "home";
 		}
 		
 		model.addAttribute("error","SUCCESSFUL INSERTION OF THE RETAILER DETAILS");
-		return "SUCCESSFUL INSERTION OF THE RETAILER DETAILS";
-		//return "home";
+		//return "SUCCESSFUL INSERTION OF THE RETAILER DETAILS";
+		return "home";
 	}
 	
-	@GetMapping("/getretailer/{id}")
-	public @ResponseBody String ShowRetailerById(@PathVariable("id") int id,HttpSession session,Model model)
+	@GetMapping("/getretailer")
+	public String ShowRetailerById(@RequestParam("id") int id,HttpSession session,Model model)
 	{
 		if(is_student(session) || is_staff(session))
 		{
 			model.addAttribute("error","NOT AUTHORISED TO SEE RETAILER DETAILS");
-			return "NOT AUTHORISED TO SEE RETAILER DETAILS";
-			//return "home";
+			//return "NOT AUTHORISED TO SEE RETAILER DETAILS";
+			return "home";
 		}
 		
 		if(!is_manager(session))
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE";
-			//return "Login";		
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE";
+			return "Login";		
 		}
 		
 		Manager manager = (Manager)session.getAttribute("manager");
@@ -104,30 +117,36 @@ public class RetailerController {
 		if(cur_id!=102)
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE";
-			//return "Login";
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE";
+			return "Login";
 		}
 		
 		Retailer retailer = retailerrepo.getRetailerById(id);
-		model.addAttribute("RetailerQuery",retailer);
-		return "Retailer ";
+		if(retailer.getRetailerid()==-1)
+		{
+			model.addAttribute("error","No Such Retailer");
+			return "Retailers";
+		}
+		
+		model.addAttribute("qq",retailer);
+		return "Retailers";
 	}
 	
 	@GetMapping("/getretailers")
-	public @ResponseBody String ShowRetailers(Model model, HttpSession session)
+	public String ShowRetailers(Model model, HttpSession session)
 	{
 		if(is_student(session) || is_staff(session))
 		{
 			model.addAttribute("error","NOT AUTHORISED TO SEE RETAILER DETAILS");
-			return "NOT AUTHORISED TO SEE RETAILER DETAILS";
-			//return "home";
+			//return "NOT AUTHORISED TO SEE RETAILER DETAILS";
+			return "home";
 		}
 		
 		if(!is_manager(session))
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE";
-			//return "Login";		
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE";
+			return "Login";		
 		}
 		
 		Manager manager = (Manager)session.getAttribute("manager");
@@ -136,8 +155,8 @@ public class RetailerController {
 		if(cur_id!=102)
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE";
-			//return "Login";
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE VIEWING THIS PAGE";
+			return "Login";
 		}
 		
 		List<Retailer> list = retailerrepo.getAllRetailers();
@@ -145,21 +164,21 @@ public class RetailerController {
 		return "Retailers";
 	}
 	
-	@DeleteMapping("/deleteretailer/{id}")
-	public @ResponseBody String DeleteRetailerById(@PathVariable("id") int id,Model model,HttpSession session)
+	@PostMapping("/deleteretailer")
+	public String DeleteRetailerById(@RequestParam("id") int id,Model model,HttpSession session)
 	{
 		if(is_student(session) || is_staff(session))
 		{
 			model.addAttribute("error","NOT AUTHORISED TO DELETE RETAILER DETAILS");
-			return "NOT AUTHORISED TO DELETE RETAILER DETAILS";
-			//return "home";
+			//return "NOT AUTHORISED TO DELETE RETAILER DETAILS";
+			return "home";
 		}
 		
 		if(!is_manager(session))
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE DELETING");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE DELETING";
-			//return "Login";		
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE DELETING";
+			return "Login";		
 		}
 		
 		Manager manager = (Manager)session.getAttribute("manager");
@@ -168,8 +187,8 @@ public class RetailerController {
 		if(cur_id!=102)
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE DELETING");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE DELETING";
-			//return "Login";
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE DELETING";
+			return "Login";
 		}
 		
 		int flag = retailerrepo.deleteRetailerById(id);
@@ -183,8 +202,8 @@ public class RetailerController {
 		return "home";
 	}
 	
-	@PutMapping("/updateretailer")
-	public @ResponseBody String UpdateRetailer(@RequestBody Retailer retailer,Model model,HttpSession session)
+	@PostMapping("/updateretailer")
+	public String UpdateRetailer(@ModelAttribute("retailer") Retailer retailer,Model model,HttpSession session)
 	{
 		if(is_student(session) || is_staff(session))
 		{
@@ -196,8 +215,8 @@ public class RetailerController {
 		if(!is_manager(session))
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE UPDATING");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE UPDATING";
-			//return "Login";		
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE UPDATING";
+			return "Login";		
 		}
 		
 		Manager manager = (Manager)session.getAttribute("manager");
@@ -206,8 +225,8 @@ public class RetailerController {
 		if(cur_id!=102)
 		{
 			model.addAttribute("error","LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE UPDATING");
-			return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE UPDATING";
-			//return "Login";
+			//return "LOGIN AS A MANAGER OF THE RETAILER DEPARTMENT BEFORE UPDATING";
+			return "Login";
 		}
 		
 		int flag = retailerrepo.updateRetailer(retailer);

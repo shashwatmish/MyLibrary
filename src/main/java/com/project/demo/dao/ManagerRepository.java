@@ -5,9 +5,9 @@ import java.util.List;
 import com.project.demo.models.Manager;
 
 public interface ManagerRepository {
-	Manager saveManager(Manager manager);
+	int saveManager(Manager manager);
 	Manager getManagerById(int id);
 	List<Manager> getAllManagers();
-	Manager updateManager(Manager manager);
+	int updateManager(Manager manager);
 	int deleteManagerById(int id);
 }

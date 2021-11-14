@@ -61,32 +61,52 @@ public class StudentController {
 			return "home";		
 		}
 		
-		student =  studentrepo.saveStudent(student);
-		model.addAttribute("Studentid",true);
+		int flag =  studentrepo.saveStudent(student);
+		if(flag!=1)
+		{
+			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
+			return "home";
+		}
 		return "home";
 	}
 	
-	@GetMapping("/getstudent/{id}")
-	public @ResponseBody String ShowStudent(@PathVariable("id") int id,Model model)
+	@GetMapping("/getstudent")
+	public String ShowStudent(@RequestParam("id") int id,Model model)
 	{
 		Student student = studentrepo.getStudentById(id);
-		model.addAttribute("StudentQuery",student);
-		return "Student";
+		if(student.getStudentid()==-1)
+		{
+			model.addAttribute("error","STUDENT DOESN'T EXISTS");
+			return "Students";
+		}
+		model.addAttribute("qq",student);
+		return "Students";
 	}
 	
 	@GetMapping("/getstudents")
-	public @ResponseBody String ShowStudents(Model model)
+	public String ShowStudents(Model model,HttpSession session)
 	{
-		//return studentrepo.getAllStudents();
+		if(!is_student(session) && !is_staff(session) && !is_manager(session))
+		{
+			model.addAttribute("error","KINDLY LOGIN BEFORE VISITING THIS PAGE");
+			return "Login";
+		}
+		
 		List<Student> list = studentrepo.getAllStudents();
 		model.addAttribute("qresult",list);
 		return "Students";
 	}
 	
-	@PutMapping("/updatestudent")
-	public @ResponseBody String UpdateStudent(@RequestBody Student student,Model model, HttpSession session)
+	@GetMapping("/updatestudent")
+	public String UpdateStudent()
 	{
-		if(!is_student(session) && !is_manager(session))
+		return "UpdateStudent";
+	}
+	
+	@PostMapping("/updatestudent")
+	public String UpdateStudent(@ModelAttribute("student") Student student,Model model, HttpSession session)
+	{
+		if(is_student(session) || is_staff(session))
 		{
 			model.addAttribute("error","LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING");
 			return "LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING";
@@ -99,22 +119,8 @@ public class StudentController {
 			if(dept!=103)
 			{
 				model.addAttribute("error","LOGIN AS A STUDENT OR MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING");
-				return "LOGIN AS A STUDENT OR MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING";
-				// return "home";
-			}
-		}
-		
-		if(is_student(session))
-		{
-			int id = student.getStudentId();
-			Student cur_Student = (Student)session.getAttribute("student");
-			int cur_id = cur_Student.getStudentId();
-			
-			if(cur_id!=id)
-			{
-				model.addAttribute("error","YOU CAN'T UPDATE OTHER STUDENTS DETAILS");
-				return "YOU CAN'T UPDATE OTHER STUDENTS DETAILS";
-				// return "home";
+				//return "LOGIN AS A STUDENT OR MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE UPDATING";
+				return "home";
 			}
 		}
 		
@@ -122,23 +128,22 @@ public class StudentController {
 		if(flag!=1)
 		{
 			model.addAttribute("error", "SOMETHING WENT WRONG, PLEASE TRY AGAIN");
-			return "SOMETHING WENT WRONG, PLEASE TRY AGAIN";
-			//return "home";
+			//return "SOMETHING WENT WRONG, PLEASE TRY AGAIN";
+			return "home";
 		}
 		
 		model.addAttribute("error","SUCCESS UPDATION OF DETAILS");
-		return "SUCCESSFUL UPDATION OF DETAILS";
-		//return "home";
+		//return "SUCCESSFUL UPDATION OF DETAILS";
+		return "home";
 	}
 	
-	@DeleteMapping("/deletestudent/{id}")
-	public @ResponseBody String Deletestudent(@PathVariable("id") int id,Model model,HttpSession session)
+	@PostMapping("/deletestudent")
+	public String Deletestudent(@RequestParam("id") int id,Model model,HttpSession session)
 	{
-		if(!is_student(session) && !is_manager(session))
+		if(is_student(session) || is_staff(session))
 		{
-			model.addAttribute("error","LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING");
-			return "LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING";
-			// return "home";
+			model.addAttribute("error","LOGIN AS A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING");
+			return "home";
 		}
 		
 		if(is_manager(session))
@@ -146,45 +151,31 @@ public class StudentController {
 			int dept = (int)session.getAttribute("Dept");
 			if(dept!=103)
 			{
-				model.addAttribute("error","LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING");
-				return "LOGIN AS A STUDENT OR A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING";
-				// return "home";
+				model.addAttribute("error","LOGIN AS A MANAGER OF THE STUDENTAFFAIRS DEPARTMENT BEFORE DELETING");
+				return "home";
 			}
 		}
 		
-		if(is_student(session))
+		Student student = studentrepo.getStudentById(id);
+		
+		int books = student.getBooksIssued();
+		
+		if(books>0)
 		{
-			Student cur_Student = (Student)session.getAttribute("student");
-			int cur_id = cur_Student.getStudentId();
-			
-			if(cur_id!=id)
-			{
-				model.addAttribute("error","YOU CAN'T UPDATE OTHER STUDENTS DETAILS");
-				return "YOU CAN'T UPDATE OTHER STUDENTS DETAILS";
-				// return "home";
-			}
+			model.addAttribute("error","THIS STUDENT HAS ISSUED SOME BOOKS. ASK HIM/HER TO RETURN THE BOOKS FIRST");
+			return "home";
 		}
 		
 		int flag = studentrepo.deleteStudentById(id);
 		if(flag!=1)
 		{
 			model.addAttribute("error", "SOMETHING WENT WRONG, PLEASE TRY AGAIN");
-			return "SOMETHING WENT WRONG, PLEASE TRY AGAIN";
-			//return "home";
-		}
-		
-		if(is_student(session))
-		{
-			logout(session);
-			model.addAttribute("error","SUCCESSFUL DELETION OF DETAILS AND YOU WERE LOGGED OUT");
-			return "SUCCESSFUL DELETION OF DETAILS";
-			// return "home";
+			return "home";
 		}
 			
-		model.addAttribute("error","SUCCESSFUL DELETION OF DETAILS AND YOU WERE LOGGED OUT");
-		return "SUCCESSFUL DELETION OF DETAILS";
-		//return "home";
-		//return 
+		model.addAttribute("error","SUCCESSFUL DELETION OF DETAILS");
+		//"SUCCESSFUL DELETION OF DETAILS";
+		return "home";
 	}
 	
 	@PostMapping("/student/login")
@@ -197,13 +188,13 @@ public class StudentController {
 		} 
 		
 		Student student= new Student();
-		student.setStudentId(id);
+		student.setStudentid(id);
 		student.setPassword(password);
 		
 		Student dummyLogin = new Student();
 		dummyLogin = studentrepo.getStudentById(id);
 		
-		if(dummyLogin.getStudentId()==-1)
+		if(dummyLogin.getStudentid()==-1)
 		{
 			model.addAttribute("error","NO SUCH STUDENT EXISTS !!");
 			return "LoginStudent";

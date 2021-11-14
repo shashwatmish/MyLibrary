@@ -22,9 +22,8 @@ public class ManagerRepositoryImpl implements ManagerRepository
 	private JdbcTemplate jdbctemplate;
 	
 	@Override
-	public Manager saveManager(Manager manager) {
-		jdbctemplate.update(saveManager,manager.getDeptid(),manager.getFname(),manager.getLname(),manager.getPassword(),manager.getStreet(),manager.getArea(),manager.getPincode(),manager.getContact(),manager.getEmail());
-		return manager;
+	public int saveManager(Manager manager) {
+		return jdbctemplate.update(saveManager,manager.getDeptid(),manager.getFname(),manager.getLname(),manager.getPassword(),manager.getStreet(),manager.getArea(),manager.getPincode(),manager.getContact(),manager.getEmail());
 	}
 
 
@@ -82,8 +81,8 @@ public class ManagerRepositoryImpl implements ManagerRepository
 
 
 	@Override
-	public Manager updateManager(Manager manager) {
-		jdbctemplate.update(updateManager,
+	public int updateManager(Manager manager) {
+		return jdbctemplate.update(updateManager,
 				manager.getDeptid(),
 				manager.getFname(),
 				manager.getLname(),
@@ -94,7 +93,6 @@ public class ManagerRepositoryImpl implements ManagerRepository
 				manager.getContact(),
 				manager.getEmail(),
 				manager.getManagerid());
-		return manager;
 	}
 	
 }

@@ -18,7 +18,7 @@ public class Staff {
 	private String street;
 	private String area;
 	private long pincode;
-	private int HandlesShelf;
+	private int handlesshelf;
 	public int getStaffid() {
 		return staffid;
 	}
@@ -79,17 +79,17 @@ public class Staff {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getHandlesShelf() {
-		return HandlesShelf;
+	public int getHandlesshelf() {
+		return handlesshelf;
 	}
-	public void setHandlesShelf(int handlesShelf) {
-		HandlesShelf = handlesShelf;
+	public void setHandlesshelf(int handlesshelf) {
+		this.handlesshelf = handlesshelf;
 	}
 	@Override
 	public String toString() {
 		return "Staff [staffid=" + staffid + ", fname=" + fname + ", lname=" + lname + ", gender=" + gender
 				+ ", street=" + street + ", area=" + area + ", pincode=" + pincode + ", contact=" + contact + ", email="
-				+ email + ", password=" + password + ", HandlesShelf=" + HandlesShelf + "]";
+				+ email + ", password=" + password + ", HandlesShelf=" + handlesshelf + "]";
 	}
 	
 }

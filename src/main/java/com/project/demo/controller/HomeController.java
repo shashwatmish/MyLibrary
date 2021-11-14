@@ -49,14 +49,26 @@ public class HomeController {
 	}
 	
 	@GetMapping("/login")
-	public String LoginMain()
+	public String LoginMain(HttpSession session, Model model)
 	{
+		if(is_manager(session) || is_student(session) || is_staff(session))
+		{
+			model.addAttribute("error","YOU ARE ALREADY LOGGED IN.");
+			return "home";
+		}
+		
 		return "Login";
 	}
 	
 	@GetMapping("/register")
-	public String RegisterMain()
+	public String RegisterMain(Model model, HttpSession session)
 	{
+		if(is_manager(session) || is_student(session) || is_staff(session))
+		{
+			model.addAttribute("error","YOU ARE ALREADY LOGGED IN. LOG OUT BEFORE REGISTERING.");
+			return "home";
+		}
+		
 		return "Register";
 	}
 	

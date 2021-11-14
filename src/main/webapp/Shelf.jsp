@@ -63,28 +63,27 @@ p{
 	<br><br>
 	
 		<c:if test="${manager ne null && Dept eq 101}">
-			<a class="btn btn-success" href="/issue/book" style="left: 400px;">Issue Book</a>
-			<a class="btn btn-primary" href="/return/book" style="left: 390px;">Return Book</a>
-			<a class="btn btn-primary" href="/updatebook" style="left: 380px;">Update Book</a>
+			<a class="btn btn-primary" href="/addshelf" style="left: 390px;">Add a Shelf</a>
+			<a class="btn btn-primary" href="/updateshelf" style="left: 380px;">Update a  Shelf</a>
 		</c:if>
 	
 	<div class="list-group">
 		<h1>
-			<label style="color: green; position: relative; left: 45%;">Books
+			<label style="color: green; position: relative; left: 45%;">Shelves
 			</label>
 		</h1>
-		<form class="form-inline my-2 my-lg-0" action="/getbook" method="get" style="justify-content: center;">
+		<form class="form-inline my-2 my-lg-0" action="/getshelf" method="get" style="justify-content: center;">
 			<input style="border:1px solid green; width:350px;" class="form-control mr-sm-2 " type="text"
-				placeholder="Enter Book ID to be searched" aria-label="Search" style="width: 50%;"
+				placeholder="Enter Shelf ID to be searched" aria-label="Search" style="width: 50%;"
 				name="id">
 			<button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
 		</form>
 		
 		<c:if test="${manager ne null && Dept eq 101}">
 			<br>
-			<form class="form-inline my-2 my-lg-0" action="/deletebook" method="post" style="justify-content: center;">
+			<form class="form-inline my-2 my-lg-0" action="/deleteshelf" method="post" style="justify-content: center;">
 			<input style="border:1px solid green; width:350px;" class="form-control mr-sm-2 " type="text"
-				placeholder="Enter Book ID to be removed" aria-label="Delete" style="width: 50%;"
+				placeholder="Enter Shelf ID to be removed" aria-label="Delete" style="width: 50%;"
 				name="id">
 				<button class="btn btn-danger my-2 my-sm-0" type="submit">Delete</button>
 			</form>
@@ -93,64 +92,26 @@ p{
 		<br><br>
 		
 		<c:if test="${ error ne null }">
-			<p>THIS BOOK DOESN'T EXIST</p>
+			<p>THIS SHELF DOESN'T EXIST</p>
 		</c:if>
 		
 		<c:if test="${ qq ne null }">
 			<div class="card border border-success">
 
-				<div class="card-header   bg-info text-white" name="book name">
-				
-				<!--  <form action="/issue/book" method="GET">
-					<input type="hidden" value="${q.bookid}" name="bookid"> <input
-						type="submit" value="issue" name="submit"
-						class="btn btn-success btn-lg"
-						style="position: absolute; right: 0px; top: 0px; padding: 10px, 20px;">
-				</form>
-				
-				-->
-				</div>
 				<div class="card-body">
-					<h5 class="card-title">
-						Book_ID: <span style="color: #6c757d !important">${qq.bookid }</span>
-					</h5>
 					<h5 class="card-title">
 						Shelf_ID: <span style="color: #6c757d !important">${qq.shelfid}</span>
 					</h5>
 					<h5 class="card-title">
-						Title: <span style="color: #6c757d !important">${qq.title}</span>
+						Shelf Handler: <span style="color: #6c757d !important">${qq.handler}</span>
 					</h5>
 					<h5 class="card-title">
-						Author: <span style="color: #6c757d !important">${qq.author }</span>
+						Floor: <span style="color: #6c757d !important">${qq.floor }</span>
 					</h5>
 					<h5 class="card-title">
-						Publications:<span style="color: #6c757d !important">
-							${qq.publications }</span>
+						Description:<span style="color: #6c757d !important">
+							${qq.description }</span>
 					</h5>
-					<h5 class="card-title">
-						Language:<span style="color: #6c757d !important">
-							${qq.language }</span>
-					</h5>
-				</div>
-				<div class="card-footer text-muted">
-					<strong>Status:</strong>
-					<c:if test="${manager ne null && Dept eq 101}">
-						<c:if test="${qq.isissued == true }">
-							<a href="/updatebook"> <input type="submit"
-								value="available" name="submit" class="btn btn-success btn-lg">
-							</a>
-						</c:if>
-						<c:if test="${qq.isissued==false }">
-							<a href="/updatebook"> <input type="submit"
-								value="Not available" name="submit"
-								class="btn btn-danger btn-lg">
-							</a>
-						</c:if>
-					</c:if>
-					<c:if test="${student ne null || staff ne null}">
-						<c:if test="${qq.isissued == false }"> Available  </c:if>
-						<c:if test="${qq.isissued==true}"> Currently Not available</c:if>
-					</c:if>
 				</div>
 			</div>
 		</c:if>
@@ -159,43 +120,20 @@ p{
 
 			<div class="card border border-success">
 
-				<div class="card-header   bg-info text-white" name="book name">
-				
-				<!--  <form action="/issue/book" method="GET">
-					<input type="hidden" value="${q.bookid}" name="bookid"> <input
-						type="submit" value="issue" name="submit"
-						class="btn btn-success btn-lg"
-						style="position: absolute; right: 0px; top: 0px; padding: 10px, 20px;">
-				</form>
-				
-				-->
-				</div>
 				<div class="card-body">
-					<h5 class="card-title">
-						Book_ID: <span style="color: #6c757d !important">${q.bookid }</span>
-					</h5>
 					<h5 class="card-title">
 						Shelf_ID: <span style="color: #6c757d !important">${q.shelfid}</span>
 					</h5>
 					<h5 class="card-title">
-						Title: <span style="color: #6c757d !important">${q.title}</span>
+						Shelf Handler: <span style="color: #6c757d !important">${q.handler}</span>
 					</h5>
 					<h5 class="card-title">
-						Author: <span style="color: #6c757d !important">${q.author }</span>
+						Floor: <span style="color: #6c757d !important">${q.floor }</span>
 					</h5>
 					<h5 class="card-title">
-						Publications:<span style="color: #6c757d !important">
-							${q.publications }</span>
+						Description:<span style="color: #6c757d !important">
+							${q.description }</span>
 					</h5>
-					<h5 class="card-title">
-						Language:<span style="color: #6c757d !important">
-							${q.language }</span>
-					</h5>
-				</div>
-				<div class="card-footer text-muted">
-					<strong>Status:</strong>
-						<c:if test="${q.isissued == false }"> Available  </c:if>
-						<c:if test="${q.isissued==true}"> Currently Not available</c:if>
 				</div>
 			</div>
 		</c:forEach>

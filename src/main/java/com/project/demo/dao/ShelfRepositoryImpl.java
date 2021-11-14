@@ -21,21 +21,28 @@ public class ShelfRepositoryImpl implements ShelfRepository{
 	private JdbcTemplate jdbctemplate;
 	
 	@Override
-	public Shelf saveShelf(Shelf shelf) {
-		jdbctemplate.update(saveShelf,shelf.getHandler(),shelf.getFloor(),shelf.getDescription());
-		return shelf;
+	public int saveShelf(Shelf shelf) {
+		return jdbctemplate.update(saveShelf,shelf.getHandler(),shelf.getFloor(),shelf.getDescription());
 	}
 
 	@Override
 	public Shelf getShelfById(int id) {
-		return jdbctemplate.queryForObject(getShelfById,(rs,rowNum)->{
+		try {
+			return jdbctemplate.queryForObject(getShelfById,(rs,rowNum)->{
+				Shelf shelf = new Shelf();
+				shelf.setShelfid(rs.getInt(1));
+				shelf.setHandler(rs.getInt(2));
+				shelf.setFloor(rs.getInt(3));
+				shelf.setDescription(rs.getString(4));
+				return shelf;
+			},id);
+		}
+		catch(Exception e)
+		{
 			Shelf shelf = new Shelf();
-			shelf.setShelfid(rs.getInt(1));
-			shelf.setHandler(rs.getInt(2));
-			shelf.setFloor(rs.getInt(3));
-			shelf.setDescription(rs.getString(4));
+			shelf.setShelfid(-1);
 			return shelf;
-		},id);
+		}
 	}
 
 	@Override

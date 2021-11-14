@@ -25,7 +25,7 @@ public class Book
 	public int getShelfid() {
 		return shelfid;
 	}
-	public void setShelfId(int shelfid) {
+	public void setShelfid(int shelfid) {
 		this.shelfid = shelfid;
 	}
 	public String getTitle() {
@@ -46,10 +46,10 @@ public class Book
 	public void setPublications(String publications) {
 		this.publications = publications;
 	}
-	public boolean isIsissued() {
+	public boolean getIsissued() {
 		return isissued;
 	}
-	public void setIs_issued(boolean isissued) {
+	public void setIsissued(boolean isissued) {
 		this.isissued = isissued;
 	}
 	public String getLanguage() {

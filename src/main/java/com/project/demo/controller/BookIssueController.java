@@ -101,7 +101,7 @@ public class BookIssueController {
 		Book book = bookrepo.getBookById(bookid);
 		
 		
-		if(book.isIsissued()==true)
+		if(book.getIsissued()==true)
 		{
 			model.addAttribute("error","SORRY, THIS BOOK IS ALREADY ISSUED BY SOMEONE");
 			return "home";
@@ -134,7 +134,7 @@ public class BookIssueController {
 		student = studentrepo.getStudentById(studentid);
 		
 		
-		book.setIs_issued(true);
+		book.setIsissued(true);
 		bookrepo.updateBook(book);
 		book = bookrepo.getBookById(bookid);
 		
@@ -207,7 +207,7 @@ public class BookIssueController {
 		}
 		
 		Book book = bookrepo.getBookById(bookid);
-		book.setIs_issued(false);
+		book.setIsissued(false);
 		bookrepo.updateBook(book);
 		book = bookrepo.getBookById(bookid);
 		

@@ -111,7 +111,7 @@ public class BookController {
 		}
 		
 		Book book = bookrepo.getBookById(id);
-		if(book.isIsissued()==true)
+		if(book.getIsissued()==true)
 		{
 			model.addAttribute("error","CAN'T DELETE THIS BOOK AS IT IS ISSUED BY SOMEONE");
 			return "home";
@@ -140,7 +140,13 @@ public class BookController {
 		return "home";
 	}
 	
-	@PutMapping("/updatebook")
+	@GetMapping("/updatebook")
+	public String UpdateBook()
+	{
+		return "UpdateBook";
+	}
+	
+	@PostMapping("/updatebook")
 	public String UpdateBook(@ModelAttribute("book") Book book,Model model, HttpSession session)
 	{
 		if(!is_manager(session))
@@ -156,8 +162,9 @@ public class BookController {
 			return "home";
 		}
 		
+		System.out.println(book);
 		int flag = bookrepo.updateBook(book);
-		if(flag==1)
+		if(flag!=1)
 		{
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
 			return "home";

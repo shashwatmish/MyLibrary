@@ -20,10 +20,10 @@ public class StudentRepositoryImpl implements StudentRepository
 	private JdbcTemplate jdbctemplate;
 	
 	@Override
-	public Student saveStudent(Student student) 
+	public int saveStudent(Student student) 
 	{
-		jdbctemplate.update(saveStudent,student.getFname(),student.getLname(),student.getPassword(),student.getAge(),student.getContact(),student.getEmail(),student.getStreet(),student.getArea(),student.getPincode(),student.getBooksIssued(),student.getGender());
-		return student;
+		return jdbctemplate.update(saveStudent,student.getFname(),student.getLname(),student.getPassword(),student.getAge(),student.getContact(),student.getEmail(),student.getStreet(),student.getArea(),student.getPincode(),student.getBooksIssued(),student.getGender());
+		
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class StudentRepositoryImpl implements StudentRepository
 		try {
 			return jdbctemplate.queryForObject(getStudentById,(rs,rowNum)->{
 				Student student = new Student();
-				student.setStudentId(rs.getInt(1));
+				student.setStudentid(rs.getInt(1));
 				student.setFname(rs.getString(2));
 				student.setLname(rs.getString(3));
 				student.setPassword(rs.getString(4));
@@ -48,7 +48,7 @@ public class StudentRepositoryImpl implements StudentRepository
 		}
 		catch(Exception e) {
 			Student student = new Student();
-			student.setStudentId(-1);
+			student.setStudentid(-1);
 			return student;
 		}
 	}
@@ -58,7 +58,7 @@ public class StudentRepositoryImpl implements StudentRepository
 		
 		return jdbctemplate.query(getAllStudents,(rs,rowNum)->{
 			Student student = new Student();
-			student.setStudentId(rs.getInt(1));
+			student.setStudentid(rs.getInt(1));
 			student.setFname(rs.getString(2));
 			student.setLname(rs.getString(3));
 			student.setPassword("CAN'T DISPLAY, SORRY!!!");
@@ -88,7 +88,7 @@ public class StudentRepositoryImpl implements StudentRepository
 				student.getPincode(),
 				student.getBooksIssued(),
 				student.getGender(),
-				student.getStudentId());
+				student.getStudentid());
 	}
 
 	@Override

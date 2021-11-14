@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Student {
-	private int StudentId;
+	private int studentid;
 	private String fname;
 	private String lname;
 	private String password;
@@ -19,12 +19,12 @@ public class Student {
 	private String street;
 	private String area;
 	private long pincode;
-	private int BooksIssued;
-	public int getStudentId() {
-		return StudentId;
+	private int booksIssued;
+	public int getStudentid() {
+		return studentid;
 	}
-	public void setStudentId(int studentId) {
-		StudentId = studentId;
+	public void setStudentid(int studentid) {
+		this.studentid = studentid;
 	}
 	public String getFname() {
 		return fname;
@@ -38,17 +38,23 @@ public class Student {
 	public void setLname(String lname) {
 		this.lname = lname;
 	}
-	public String getGender() {
-		return gender;
+	public String getPassword() {
+		return password;
 	}
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public int getAge() {
 		return age;
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	public String getContact() {
 		return contact;
@@ -81,23 +87,18 @@ public class Student {
 		this.pincode = pincode;
 	}
 	public int getBooksIssued() {
-		return BooksIssued;
+		return booksIssued;
 	}
 	public void setBooksIssued(int booksIssued) {
-		BooksIssued = booksIssued;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
+		this.booksIssued = booksIssued;
 	}
 	@Override
 	public String toString() {
-		return "Student [StudentId=" + StudentId + ", fname=" + fname + ", lname=" + lname + ", gender=" + gender
-				+ ", age=" + age + ", contact=" + contact + ", email=" + email + ", street=" + street + ", area=" + area
-				+ ", pincode=" + pincode + ", BooksIssued=" + BooksIssued + ", password=" + password + "]";
+		return "Student [studentid=" + studentid + ", fname=" + fname + ", lname=" + lname + ", password=" + password
+				+ ", age=" + age + ", gender=" + gender + ", contact=" + contact + ", email=" + email + ", street="
+				+ street + ", area=" + area + ", pincode=" + pincode + ", booksIssued=" + booksIssued + "]";
 	}
+	
 	
 	
 }
