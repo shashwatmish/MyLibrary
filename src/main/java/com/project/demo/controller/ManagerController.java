@@ -53,7 +53,7 @@ public class ManagerController {
 	}
 	
 	@PostMapping("/registermanager")
-	public String SaveManager(@ModelAttribute("manager") Manager manager, Model model, HttpSession session) 
+	public String SaveManager(@ModelAttribute("Manager") Manager manager, Model model, HttpSession session) 
 	{	
 		if(is_manager(session) || is_staff(session) || is_student(session)) {
 			model.addAttribute("error","ALREADY LOGGED IN. LOGOUT BEFORE REGISTERING");
@@ -66,7 +66,6 @@ public class ManagerController {
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
 			return "home";
 		}
-		
 		model.addAttribute("Managerid",true);
 		return "home";
 	}
@@ -86,7 +85,13 @@ public class ManagerController {
 	
 	@GetMapping("/getmanagers")
 	public String ShowManagers(Model model,HttpSession session)
-	{		
+	{
+		if(!is_student(session) && !is_staff(session) && !is_manager(session))
+		{
+			model.addAttribute("error","KINDLY LOGIN BEFORE VISITING THIS PAGE");
+			return "Login";
+		}
+		
 		List<Manager> list=  managerrepo.getAllManagers();
 		model.addAttribute("qresult",list);
 		return "Managers";
@@ -156,8 +161,8 @@ public class ManagerController {
 		}
 		
 		managerrepo.updateManager(manager);
-		
-		model.addAttribute("error","DETAILS UPDATED SUCCESSFULLY");
+		logout(session);
+		model.addAttribute("error","DETAILS UPDATED SUCCESSFULLY. PLEASE LOGIN AGAIN WITH NEW CREDENTIALS");
 		// return "DETAILS UPDATED SUCCESSFULLY";
 		return "home";
 	}

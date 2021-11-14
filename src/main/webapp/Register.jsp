@@ -64,8 +64,8 @@ body {
 			<div
 				class="row h-600 align-items-center justify-content-center text-center">
 				<div class="col-lg-10 align-self-end">
-					<h1 class="text-uppercase font-weight-bold"
-						style="font-size: 100px; color:#00008B;">MyLibrary</h1>
+					<a href="/"><h1 class="text-uppercase font-weight-bold"
+						style="font-size: 100px; color:#00008B;">MyLibrary</h1></a>
 				</div>
 				<div class="col-lg-9 align-self-baseline">
 					<h3 class="text-white-75 font-weight-light mb-5"
@@ -76,9 +76,9 @@ body {
 	</header>
 
 
-		<a href="/student/register" class="btn btn-primary" style="position: absolute;top: 35%;left: 40%;width:300px;height:70px;font-size:22px;"><h3>Student</h3></a>
-		<a href="/staff/register" class="btn btn-primary" style="position: absolute;top: 55%;left: 40%;width:300px;height:70px;font-size:22px;"><h3>Staff</h3></a>
-		<a href="/manager/register" class="btn btn-primary" style="position: absolute;top: 75%;left: 40%;width:300px;height:70px;font-size:22px;"><h3>Manager</h3></a>
+		<a href="/student/register" class="btn btn-primary" style="position: absolute;top: 35%;left: 40%;width:300px;height:50px;font-size:22px;border-radius:8px;"><h3>Student</h3></a>
+		<a href="/staff/register" class="btn btn-primary" style="position: absolute;top: 55%;left: 40%;width:300px;height:50px;font-size:22px;border-radius:8px;"><h3>Staff</h3></a>
+		<a href="/manager/register" class="btn btn-primary" style="position: absolute;top: 75%;left: 40%;width:300px;height:50px;font-size:22px;border-radius:8px;"><h3>Manager</h3></a>
 
 </body>
 </html>

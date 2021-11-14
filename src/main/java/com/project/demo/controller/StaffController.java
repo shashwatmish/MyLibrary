@@ -56,7 +56,7 @@ public class StaffController {
 	
 	
 	@PostMapping("/registerstaff")
-	public String SaveStaff(@ModelAttribute("staff") Staff staff, Model model, HttpSession session) {
+	public String SaveStaff(@ModelAttribute("Staff") Staff staff, Model model, HttpSession session) {
 		if(is_manager(session) || is_staff(session) || is_student(session)) {
 			model.addAttribute("error","ALREADY LOGGED IN. LOGOUT BEFORE REGISTERING");
 			return "home";		
@@ -68,6 +68,7 @@ public class StaffController {
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
 			return "home";
 		}
+		
 		model.addAttribute("Staffid",true);
 		return "home";
 	}
@@ -126,7 +127,7 @@ public class StaffController {
 			}
 		}
 		
-		int flag = staffrepo.updateStaff(staff);
+		int flag = staffrepo.updateStaffNew(staff);
 		System.out.println(staff.getStaffid());
 		if(flag!=1)
 		{

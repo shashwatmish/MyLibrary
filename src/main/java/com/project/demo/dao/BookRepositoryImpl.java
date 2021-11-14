@@ -15,6 +15,7 @@ public class BookRepositoryImpl implements BookRepository{
 	private static final String GetAllBook = "SELECT * FROM BOOK";
 	private static final String getBookById = "SELECT * FROM BOOK WHERE BOOKID=?";
 	private static final String updateBook = "UPDATE BOOK SET shelfid=?,language=?, isissued=? WHERE BOOKID=?";
+	private static final String updateBookNew = "UPDATE BOOK SET shelfid=?,language=? WHERE BOOKID=?";
 	private static final String DeleteBookById = "DELETE FROM BOOK WHERE BOOKID=?" ;
 	@Autowired
 	JdbcTemplate jdbctemplate;
@@ -69,5 +70,10 @@ public class BookRepositoryImpl implements BookRepository{
 	@Override
 	public int updateBook(Book book) {
 		return jdbctemplate.update(updateBook,book.getShelfid(),book.getLanguage(),book.getIsissued(),book.getBookid());
+	}
+
+	@Override
+	public int updateBookNew(Book book) {
+		return jdbctemplate.update(updateBookNew,book.getShelfid(),book.getLanguage(),book.getBookid());
 	}
 }

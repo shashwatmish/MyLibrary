@@ -16,6 +16,7 @@ public class StaffRepositoryImpl implements StaffRepository
 	private static final String getStaffById ="SELECT * FROM STAFF WHERE STAFFID=? ";
 	private static final String getAllStaff = "SELECT * FROM STAFF";
 	private static final String updateStaff = "UPDATE STAFF SET fname=?,lname=?,password=?,gender=?,contact=?,email=?,street=?,area=?,pincode=?,HandlesShelf=? WHERE STAFFID=?";
+	private static final String updateStaffNew = "UPDATE STAFF SET fname=?,lname=?,password=?,gender=?,contact=?,email=?,street=?,area=?,pincode=? WHERE STAFFID=?";
 	private static final String deleteStaffById = "DELETE FROM STAFF WHERE STAFFID=?";
 	@Autowired
 	private JdbcTemplate jdbctemplate;
@@ -87,6 +88,20 @@ public class StaffRepositoryImpl implements StaffRepository
 				staff.getArea(),
 				staff.getPincode(),
 				staff.getHandlesshelf(),
+				staff.getStaffid());
+	}
+
+	@Override
+	public int updateStaffNew(Staff staff) {
+		return jdbctemplate.update(updateStaffNew,staff.getFname(),
+				staff.getLname(),
+				staff.getPassword(),
+				staff.getGender(),
+				staff.getContact(),
+				staff.getEmail(),
+				staff.getStreet(),
+				staff.getArea(),
+				staff.getPincode(),
 				staff.getStaffid());
 	}
 

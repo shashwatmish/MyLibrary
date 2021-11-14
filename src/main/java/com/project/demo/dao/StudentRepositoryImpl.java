@@ -14,7 +14,8 @@ public class StudentRepositoryImpl implements StudentRepository
 	private static final String saveStudent="INSERT INTO STUDENT (fname,lname,password,age,contact,email,street,area,pincode,booksissued,gender) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String getStudentById ="SELECT * FROM STUDENT WHERE STUDENTID=? ";
 	private static final String getAllStudents = "SELECT * FROM STUDENT";
-	private static final String UpdateStudent = "UPDATE STUDENT SET fname=?,lname=?,password=?,age=?,contact=?,email=?,street=?,area=?,pincode=?,booksissued=?,gender=? WHERE STUDENTID=?";
+	private static final String UpdateStudent = "UPDATE STUDENT SET fname=?,lname=?,password=?,age=?,contact=?,email=?,street=?,area=?,pincode=?,gender=?,booksissued=? WHERE STUDENTID=?";
+	private static final String UpdateStudentNew = "UPDATE STUDENT SET fname=?,lname=?,password=?,age=?,contact=?,email=?,street=?,area=?,pincode=?,gender=? WHERE STUDENTID=?";
 	private static final String deleteStudentById = "DELETE FROM STUDENT WHERE STUDENTID=?";
 	@Autowired
 	private JdbcTemplate jdbctemplate;
@@ -22,7 +23,7 @@ public class StudentRepositoryImpl implements StudentRepository
 	@Override
 	public int saveStudent(Student student) 
 	{
-		return jdbctemplate.update(saveStudent,student.getFname(),student.getLname(),student.getPassword(),student.getAge(),student.getContact(),student.getEmail(),student.getStreet(),student.getArea(),student.getPincode(),student.getBooksIssued(),student.getGender());
+		return jdbctemplate.update(saveStudent,student.getFname(),student.getLname(),student.getPassword(),student.getAge(),student.getContact(),student.getEmail(),student.getStreet(),student.getArea(),student.getPincode(),student.getBooksissued(),student.getGender());
 		
 	}
 
@@ -42,7 +43,7 @@ public class StudentRepositoryImpl implements StudentRepository
 				student.setStreet(rs.getString(9));
 				student.setArea(rs.getString(10));
 				student.setPincode(rs.getLong(11));
-				student.setBooksIssued(rs.getInt(12));
+				student.setBooksissued(rs.getInt(12));
 				return student;
 			},id);
 		}
@@ -69,7 +70,7 @@ public class StudentRepositoryImpl implements StudentRepository
 			student.setStreet(rs.getString(9));
 			student.setArea(rs.getString(10));
 			student.setPincode(rs.getLong(11));
-			student.setBooksIssued(rs.getInt(12));
+			student.setBooksissued(rs.getInt(12));
 			return student;
 		});
 	}
@@ -86,14 +87,30 @@ public class StudentRepositoryImpl implements StudentRepository
 				student.getStreet(),
 				student.getArea(),
 				student.getPincode(),
-				student.getBooksIssued(),
 				student.getGender(),
+				student.getBooksissued(),
 				student.getStudentid());
 	}
 
 	@Override
 	public int deleteStudentById(int id) {
 		return jdbctemplate.update(deleteStudentById,id);
+	}
+
+	@Override
+	public int updateStudentNew(Student student) {
+		return jdbctemplate.update(UpdateStudentNew,
+				student.getFname(),
+				student.getLname(),
+				student.getPassword(),
+				student.getAge(),
+				student.getContact(),
+				student.getEmail(),
+				student.getStreet(),
+				student.getArea(),
+				student.getPincode(),
+				student.getGender(),
+				student.getStudentid());
 	}
 
 }

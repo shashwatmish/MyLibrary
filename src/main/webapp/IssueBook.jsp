@@ -39,12 +39,12 @@
 						</div>
 						
 						<div class="form-group">
-							<label>Issue Date</label> <input class="form-control"
+							<label>Issue Date {DD/MM/YYYY}</label> <input class="form-control"
 								name="issuedate" type="text" required>
 						</div>
 						
 						<div class="form-group">
-							<label>Return Date </label> <input class="form-control"
+							<label>Return Date {DD/MM/YYYY}</label> <input class="form-control"
 								name="returndate" type="text" required>
 						</div>
 						

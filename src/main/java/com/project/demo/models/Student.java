@@ -19,7 +19,7 @@ public class Student {
 	private String street;
 	private String area;
 	private long pincode;
-	private int booksIssued;
+	private int booksissued;
 	public int getStudentid() {
 		return studentid;
 	}
@@ -86,17 +86,17 @@ public class Student {
 	public void setPincode(long pincode) {
 		this.pincode = pincode;
 	}
-	public int getBooksIssued() {
-		return booksIssued;
+	public int getBooksissued() {
+		return booksissued;
 	}
-	public void setBooksIssued(int booksIssued) {
-		this.booksIssued = booksIssued;
+	public void setBooksissued(int booksissued) {
+		this.booksissued = booksissued;
 	}
 	@Override
 	public String toString() {
 		return "Student [studentid=" + studentid + ", fname=" + fname + ", lname=" + lname + ", password=" + password
 				+ ", age=" + age + ", gender=" + gender + ", contact=" + contact + ", email=" + email + ", street="
-				+ street + ", area=" + area + ", pincode=" + pincode + ", booksIssued=" + booksIssued + "]";
+				+ street + ", area=" + area + ", pincode=" + pincode + ", booksIssued=" + booksissued + "]";
 	}
 	
 	

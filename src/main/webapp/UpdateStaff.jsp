@@ -81,11 +81,6 @@
 								class="form-control" placeholder="" required>
 						</div>
 						
-						<div class="form-group">
-							<label>No. of Shelves Handled </label> <input type="text" name="handlesshelf"
-								class="form-control" placeholder="" required>
-						</div>
-						
 						<!-- form-group end.// -->
 						<div class="form-group">
 							<label class="form-check form-check-inline"> <input

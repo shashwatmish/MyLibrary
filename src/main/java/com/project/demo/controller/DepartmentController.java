@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,23 +18,12 @@ public class DepartmentController {
 	
 	@Autowired
 	DepartmentRepository deptrepo;
-
-	@GetMapping("/getdept/{id}")
-	public @ResponseBody Department getDepartmentById(@PathVariable("id") int id)
-	{
-		return deptrepo.getDeptById(id);
-	}
 	
 	@GetMapping("/getdepts")
-	public @ResponseBody List<Department> getDepartmentById()
+	public String getDepartmentById(Model model)
 	{
-		return deptrepo.getAllDepts();
+		List<Department> list = deptrepo.getAllDepts();
+		model.addAttribute("qresult",list);
+		return "Departments";
 	}
-	
-	@PutMapping("/updatedept")
-	public @ResponseBody Department UpdateDepartment(@RequestBody Department dept)
-	{
-		return deptrepo.updateDept(dept);
-	}
-
 }

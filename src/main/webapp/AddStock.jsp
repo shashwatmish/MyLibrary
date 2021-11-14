@@ -50,7 +50,7 @@
 						</div>
 						
 						<div class="form-group">
-							<label>Books Available </label> <input class="form-control"
+							<label>No. of Books Available </label> <input class="form-control"
 								name="booksavailable" type="text" required>
 						</div>
 						

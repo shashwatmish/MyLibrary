@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.project.demo.dao.ShelfRepository;
+import com.project.demo.dao.StaffRepository;
 import com.project.demo.models.Shelf;
+import com.project.demo.models.Staff;
 
 @Controller
 public class ShelfController {
@@ -41,6 +43,9 @@ public class ShelfController {
 	
 	@Autowired
 	ShelfRepository shelfrepo;
+	
+	@Autowired
+	StaffRepository staffrepo;
 	
 	@GetMapping("/addshelf")
 	public String SaveShelf()
@@ -77,6 +82,15 @@ public class ShelfController {
 			return "home";
 		}
 		
+		int staffid = shelf.getHandler();
+		Staff staff = staffrepo.getStaffById(staffid);
+		
+		int handles = staff.getHandlesshelf();
+		handles++;
+		staff.setHandlesshelf(handles);
+		staffrepo.updateStaff(staff);
+		
+		model.addAttribute("error","SHELF ADDED SUCCESSFULLY");
 		return "home";
 	}
 	
@@ -94,8 +108,14 @@ public class ShelfController {
 	}
 	
 	@GetMapping("/getshelves")
-	public String ShowShelves(Model model)
+	public String ShowShelves(Model model,HttpSession session)
 	{
+		if(!is_student(session) && !is_staff(session) && !is_manager(session))
+		{
+			model.addAttribute("error","KINDLY LOGIN BEFORE VISITING THIS PAGE");
+			return "Login";
+		}
+		
 		List <Shelf> list = shelfrepo.getAllShelves();
 		model.addAttribute("qresult",list);
 		return "Shelf";
@@ -123,12 +143,24 @@ public class ShelfController {
 			return "home";
 		}
 		
+		Shelf shelf = shelfrepo.getShelfById(id);
 		int flag = shelfrepo.deleteShelfById(id);
+		
 		if(flag!=1)
 		{
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
 			return "home";
 		}
+		
+		int staffid = shelf.getHandler();
+		Staff staff = staffrepo.getStaffById(staffid);
+		
+		int handles = staff.getHandlesshelf();
+		handles--;
+		staff.setHandlesshelf(handles);
+		staffrepo.updateStaff(staff);
+		
+		model.addAttribute("error","SHELF DELETED SUCCESSFULLY");
 		return "home";
 	}
 	
@@ -148,13 +180,34 @@ public class ShelfController {
 			return "home";
 		}
 		
+		int id = shelf.getShelfid();
+		Shelf PrevShelf = shelfrepo.getShelfById(id);
+		
 		int flag = shelfrepo.updateShelf(shelf);
+		
 		if(flag!=1)
 		{
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
 			return "home";
 		}
 		
+		Shelf NewShelf = shelfrepo.getShelfById(id);
+		
+		int prev_handler_id = PrevShelf.getHandler();
+		Staff PrevStaff = staffrepo.getStaffById(prev_handler_id);
+		int handled = PrevStaff.getHandlesshelf();
+		handled--;
+		PrevStaff.setHandlesshelf(handled);
+		staffrepo.updateStaff(PrevStaff);
+		
+		int cur_handler_id = NewShelf.getHandler();
+		Staff CurStaff = staffrepo.getStaffById(cur_handler_id);
+		int handles = CurStaff.getHandlesshelf();
+		handles++;
+		CurStaff.setHandlesshelf(handles);
+		staffrepo.updateStaff(CurStaff);
+		
+		model.addAttribute("error","SHELF UPDATED SUCCESSFULLY");
 		return "home";
 	}
 }

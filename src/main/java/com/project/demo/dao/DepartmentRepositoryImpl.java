@@ -24,7 +24,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository
 			department.setDeptid(rs.getInt(1));
 			department.setDeptname(rs.getString(2));
 			department.setDescription(rs.getString(3));
-			department.setEstablishedYear(rs.getString(4));
+			department.setEstablishedyear(rs.getString(4));
 			return department;
 		},id);
 	}
@@ -36,7 +36,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository
 			department.setDeptid(rs.getInt(1));
 			department.setDeptname(rs.getString(2));
 			department.setDescription(rs.getString(3));
-			department.setEstablishedYear(rs.getString(4));
+			department.setEstablishedyear(rs.getString(4));
 			return department;
 		});
 	}
@@ -46,7 +46,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository
 		jdbctemplate.update(updateDepartment,
 				department.getDeptname(),
 				department.getDescription(),
-				department.getEstablishedYear(),
+				department.getEstablishedyear(),
 				department.getDeptid());
 		return department;
 	}

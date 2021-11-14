@@ -48,6 +48,12 @@ public class HomeController {
 		return "home";
 	}
 	
+	@GetMapping("/aboutus")
+	public String AboutUs()
+	{
+		return "AboutUs";
+	}
+	
 	@GetMapping("/login")
 	public String LoginMain(HttpSession session, Model model)
 	{

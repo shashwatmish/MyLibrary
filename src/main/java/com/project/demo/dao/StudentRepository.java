@@ -9,5 +9,6 @@ public interface StudentRepository {
 	Student getStudentById(int id);
 	List<Student> getAllStudents();
 	int updateStudent(Student student);
+	int updateStudentNew(Student student);
 	int deleteStudentById(int id);
 }

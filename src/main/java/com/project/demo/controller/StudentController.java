@@ -54,7 +54,7 @@ public class StudentController {
 	
 	
 	@PostMapping("/registerstudent")
-	public String SaveStudent(@ModelAttribute("student") Student student,Model model,HttpSession session)
+	public String SaveStudent(@ModelAttribute("Student") Student student,Model model,HttpSession session)
 	{
 		if(is_manager(session) || is_staff(session) || is_student(session)) {
 			model.addAttribute("error","ALREADY LOGGED IN. LOGOUT BEFORE REGISTERING");
@@ -67,6 +67,8 @@ public class StudentController {
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");
 			return "home";
 		}
+		
+		model.addAttribute("Studentid",true);
 		return "home";
 	}
 	
@@ -124,7 +126,7 @@ public class StudentController {
 			}
 		}
 		
-		int flag = studentrepo.updateStudent(student);
+		int flag = studentrepo.updateStudentNew(student);
 		if(flag!=1)
 		{
 			model.addAttribute("error", "SOMETHING WENT WRONG, PLEASE TRY AGAIN");
@@ -158,7 +160,7 @@ public class StudentController {
 		
 		Student student = studentrepo.getStudentById(id);
 		
-		int books = student.getBooksIssued();
+		int books = student.getBooksissued();
 		
 		if(books>0)
 		{

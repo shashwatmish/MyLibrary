@@ -9,5 +9,6 @@ public interface StaffRepository {
 	Staff getStaffById(int id);
 	List<Staff> getAllStaffs();
 	int updateStaff(Staff staff);
+	int updateStaffNew(Staff staff);
 	int deleteStaffById(int id);
 }

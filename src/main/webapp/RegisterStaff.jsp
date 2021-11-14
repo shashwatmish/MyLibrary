@@ -28,7 +28,7 @@
 		<div class="col-md-6">
 			<div class="card">
 				<article class="card-body">
-					<form id="form" action="/registerstaff" method="post" modelAttribute="staff">
+					<form id="form" action="/registerstaff" method="post" modelAttribute="Staff">
 						<div class="form-row">
 							<div class="col form-group">
 								<label>First Name </label> <input name="fname" type="text"

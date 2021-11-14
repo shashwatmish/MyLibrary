@@ -12,7 +12,7 @@ public class Department
 	private int deptid;
 	private String deptname;
 	private String description;
-	private String establishedYear;
+	private String establishedyear;
 	public int getDeptid() {
 		return deptid;
 	}
@@ -31,16 +31,16 @@ public class Department
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getEstablishedYear() {
-		return establishedYear;
+	public String getEstablishedyear() {
+		return establishedyear;
 	}
-	public void setEstablishedYear(String establishedYear) {
-		this.establishedYear = establishedYear;
+	public void setEstablishedyear(String establishedyear) {
+		this.establishedyear = establishedyear;
 	}
 	@Override
 	public String toString() {
 		return "Department [deptid=" + deptid + ", deptname=" + deptname + ", description=" + description
-				+ ", establishedYear=" + establishedYear + "]";
+				+ ", establishedYear=" + establishedyear + "]";
 	}
 	
 	

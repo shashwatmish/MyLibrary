@@ -86,11 +86,6 @@
 								class="form-control" placeholder="" required>
 						</div>
 						
-						<div class="form-group">
-							<label>No. of Books Issued </label> <input type="text" name="booksIssued"
-								class="form-control" placeholder="" required>
-						</div>
-						
 						<!-- form-group end.// -->
 						<div class="form-group">
 							<label class="form-check form-check-inline"> <input

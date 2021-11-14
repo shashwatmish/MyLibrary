@@ -9,5 +9,6 @@ public interface BookRepository {
 	Book getBookById(int id);
 	List<Book> getAllBooks();
 	int updateBook(Book book);
+	int updateBookNew(Book book);
 	int deleteBookById(int id);
 }

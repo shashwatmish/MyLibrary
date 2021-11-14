@@ -60,7 +60,10 @@ body {
 			<li class="nav-bar_item"><a href="/getretailers">Retailer</a></li>
 			<li class="nav-bar_item"><a href="/getshelves">Shelves</a></li>
 			<li class="nav-bar_item"><a href="/getstocks">Stocks</a></li>
-			<li class="nav-bar_item"><a href="">About Us</a></li>
+			<li class="nav-bar_item"><a href="/aboutus">About Us</a></li>
+			<c:if test="${manager ne null || student ne null || staff ne null}">
+				<li class="nav-bar_item"><a href="/logout">Logout</a></li>
+			</c:if> 
 		</ul>
 	</nav>
 	
@@ -120,17 +123,17 @@ body {
 						style="font-size: 100px; color:#00008B;">MyLibrary</h1>
 				</div>
 				<div class="col-lg-9 align-self-baseline">
-					<p class="text-white-75 font-weight-light mb-5"
-						style="color: white;">Welcome to our website </p>
+					<p class="text-white-75 mb-5"
+						style="color: white; font-weight:bold; font-size:20px;"> Welcome to our website </p>
 				</div>
 			</div>
 		</div>
 	</header>
 	<br>
 
-
-		<a href="/register" class="btn btn-primary" style="position: absolute;top: 50%;left: 55%;width:300px;height:70px;font-size:22px;"><h3>Register</h3></a>
-		<a href="/login" class="btn btn-primary" style="position: absolute;top: 50%;left: 25%;width:300px;height:70px;font-size:22px;"><h3>Login</h3></a>	
-
+	<c:if test="${manager eq null && student eq null && staff eq null}">
+		<a href="/register" class="btn btn-primary" style="position: absolute;top: 50%;left: 52%;width:250px;height:50px;font-size:18px; font-weight:bold; border-radius:8px;"><h3>Register</h3></a>
+		<a href="/login" class="btn btn-primary" style="position: absolute;top: 50%;left: 32%;width:250px;height:50px;font-size:18px;font-weight:bold; border-radius:8px;"><h3>Login</h3></a>	
+	</c:if> 
 </body>
 </html>

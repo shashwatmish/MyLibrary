@@ -21,14 +21,14 @@
 <style>
 p{
   border-radius:10px;
-  background-color: #E7E5FC ;    
-  text-align: center;
-  height:40px;
-  widht:300px;
+  background-color: #E7E5FC ;
+  height:20px;
+  width:600px;
   text-align:centre;
   font-size:22px;
   font-weight:bold;
-  padding:50px 40px;
+  padding:50px 150px;
+  margin-left: 30%; 
 }
 </style>
 <title>Hello, world!</title>
@@ -56,7 +56,7 @@ p{
 			<li class="nav-bar_item"><a href="/getretailers">Retailer</a></li>
 			<li class="nav-bar_item"><a href="/getshelves">Shelves</a></li>
 			<li class="nav-bar_item"><a href="/getstocks">Stock</a></li>
-			<li class="nav-bar_item"><a href="">About Us</a></li>
+			<li class="nav-bar_item"><a href="/aboutus">About Us</a></li>
 			<li class="nav-bar_item"><a href="/logout">Logout</a></li>
 		</ul>
 	</nav>
@@ -132,7 +132,7 @@ p{
 						Pincode :<span style="color: #6c757d !important">${qq.pincode }</span>
 					</h5>
 					<h5 class="card-title">
-						No. of books issued :<span style="color: #6c757d !important">${qq.booksIssued }</span>
+						No. of books issued :<span style="color: #6c757d !important">${qq.booksissued }</span>
 					</h5>
 				</div>
 			</div>
@@ -178,7 +178,7 @@ p{
 						Pincode :<span style="color: #6c757d !important">${q.pincode }</span>
 					</h5>
 					<h5 class="card-title">
-						No. of books issued :<span style="color: #6c757d !important">${q.booksIssued }</span>
+						No. of books issued :<span style="color: #6c757d !important">${q.booksissued }</span>
 					</h5>
 				</div>
 			</div>

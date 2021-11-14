@@ -46,11 +46,6 @@
 						</div>
 						
 						<div class="form-group">
-							<label>IsIssued?</label> <input class="form-control"
-								name="isissued" type="text" required>
-						</div>
-						
-						<div class="form-group">
 							<button type="submit" class="btn btn-primary btn-block">
 								Update</button>
 						</div>

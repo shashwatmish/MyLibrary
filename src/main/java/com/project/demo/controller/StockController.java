@@ -109,6 +109,12 @@ public class StockController {
 	@GetMapping("/getstocks")
 	public String GetStock(Model model,HttpSession session)
 	{
+		if(!is_student(session) && !is_staff(session) && !is_manager(session))
+		{
+			model.addAttribute("error","KINDLY LOGIN BEFORE VISITING THIS PAGE");
+			return "Login";
+		}
+		
 		if(is_student(session) || is_staff(session))
 		{
 			model.addAttribute("error","NOT AUTHORISED TO SEE STOCK DETAILS");
@@ -209,6 +215,7 @@ public class StockController {
 			//return "ONLY MANAGERS OF THE BOOKS DEPARTMENT CAN ADD BOOKS";
 			return "home";
 		}
+		
 		Stock intialStock = stockrepo.getStock(stock.getTitle(),stock.getAuthor(),stock.getPublications());
 		if(intialStock.getBooksavailable()==-1)
 		{
@@ -218,7 +225,7 @@ public class StockController {
 		}
 		
 		int prev = intialStock.getBooksavailable();
-		Stock updatedStock =  stockrepo.updateStock(stock);
+		Stock updatedStock =  stockrepo.updateStockNew(stock);
 		int cur = updatedStock.getBooksavailable();
 		
 		for(int i=1;i<=cur-prev;i++)

@@ -131,10 +131,9 @@ public class BookController {
 		Stock stock = stockrepo.getStock(title, author, publications);
 		int booksavailable = stock.getBooksavailable();
 		booksavailable--;
-		int booksissued = stock.getBooksissued();
 		stock.setBooksavailable(booksavailable);
 		
-		stockrepo.updateStock(stock);
+		stockrepo.updateStockNew(stock);
 		
 		model.addAttribute("error","Book deleted successfully");
 		return "home";
@@ -163,7 +162,7 @@ public class BookController {
 		}
 		
 		System.out.println(book);
-		int flag = bookrepo.updateBook(book);
+		int flag = bookrepo.updateBookNew(book);
 		if(flag!=1)
 		{
 			model.addAttribute("error","SOMETHING WENT WRONG, PLEASE TRY AGAIN");

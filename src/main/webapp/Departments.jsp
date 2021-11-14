@@ -62,45 +62,36 @@ p{
 	</nav>
 	<br><br>
 	
-		<c:if test="${manager ne null && Dept eq 101}">
-			<a class="btn btn-success" href="/addstock" style="left: 400px;">Add Stock</a>
-			<a class="btn btn-danger" href="/deletestock" style="left: 390px;">Delete Stock</a>
-			<a class="btn btn-primary" href="/updatestock" style="left: 380px;">Update Stock</a>
-		</c:if>
-	
 	<div class="list-group">
-		<br><br>
 		<h1>
-			<label style="color: green; position: relative; left: 45%;">Stocks
+			<label style="color: green; position: relative; left: 45%;">Departments
 			</label>
 		</h1>
+		
+		<br><br>
+		
 
 		<c:forEach begin="0" end="${qresult.size()}" var="q" items="${qresult}">
 
 			<div class="card border border-success">
 
-				</div>
 				<div class="card-body">
 					<h5 class="card-title">
-						Title: <span style="color: #6c757d !important">${q.title}</span>
+						Department Id: <span style="color: #6c757d !important">${q.deptid }</span>
 					</h5>
 					<h5 class="card-title">
-						Author: <span style="color: #6c757d !important">${q.author }</span>
+						Department Name : <span style="color: #6c757d !important">${q.deptname}</span>
 					</h5>
 					<h5 class="card-title">
-						Publications:<span style="color: #6c757d !important">
-							${q.publications }</span>
+						Description: <span style="color: #6c757d !important">${q.description}</span>
 					</h5>
 					<h5 class="card-title">
-						No. of books available :<span style="color: #6c757d !important">
-							${q.booksavailable }</span>
+						Established Year: <span style="color: #6c757d !important">${q.establishedyear }</span>
 					</h5>
-					<h5 class="card-title">
-						No. of books issued :<span style="color: #6c757d !important">
-							${q.booksissued }</span>
-					</h5>
+				</div>
 				</div>
 		</c:forEach>
 	</div>
+
 </body>
 </html>

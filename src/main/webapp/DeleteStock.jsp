@@ -18,7 +18,7 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-<div class="p-3 mb-2 bg-primary text-white"  style="text-align:center;"><h3>Update Stock</h3></div>
+<div class="p-3 mb-2 bg-primary text-white"  style="text-align:center;"><h3>Delete Stock</h3></div>
 <div class="container">
 
 	<br>

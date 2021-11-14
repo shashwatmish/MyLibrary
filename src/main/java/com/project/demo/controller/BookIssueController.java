@@ -109,7 +109,7 @@ public class BookIssueController {
 		
 		int studentid = bookissue.getStudentid();
 		Student student = studentrepo.getStudentById(studentid);
-		int total_books = student.getBooksIssued();
+		int total_books = student.getBooksissued();
 		
 		//System.out.print(total_books);
 		
@@ -128,7 +128,7 @@ public class BookIssueController {
 		}
 		
 		total_books++;
-		student.setBooksIssued(total_books);
+		student.setBooksissued(total_books);
 		studentrepo.updateStudent(student);
 		
 		student = studentrepo.getStudentById(studentid);
@@ -224,11 +224,11 @@ public class BookIssueController {
 		stock = stockrepo.updateStock(stock);
 		
 		Student student = studentrepo.getStudentById(studentid);
-		int total_books = student.getBooksIssued();
+		int total_books = student.getBooksissued();
 		total_books--;
-		student.setBooksIssued(total_books);
+		student.setBooksissued(total_books);
 		
-		student = studentrepo.getStudentById(studentid);
+		studentrepo.updateStudent(student);
 		
 		model.addAttribute("error","BOOK RETURNED SUCCESSFULLY");
 		//return "BOOK RETURNED SUCCESSFULLY";

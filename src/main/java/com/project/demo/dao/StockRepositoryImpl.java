@@ -14,7 +14,8 @@ public class StockRepositoryImpl implements StockRepository{
 	private static final String AddStock = "INSERT INTO STOCK(title,author,publications,booksavailable,booksissued) VALUES(?,?,?,?,?)";
 	private static final String GetAllStock = "SELECT * FROM STOCK";
 	private static final String getStockById = "SELECT * FROM STOCK WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)";
-	private static final String updateStock = "UPDATE STOCK SET booksavailable=? WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)";
+	private static final String updateStock = "UPDATE STOCK SET booksavailable=?,booksissued=? WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)";
+	private static final String updateStockNew = "UPDATE STOCK SET booksavailable=? WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)";
 	private static final String DeleteStock = "DELETE FROM STOCK WHERE (TITLE,AUTHOR,PUBLICATIONS)=(?,?,?)" ;
 	@Autowired
 	JdbcTemplate jdbctemplate;
@@ -67,10 +68,20 @@ public class StockRepositoryImpl implements StockRepository{
 	public Stock updateStock(Stock stock) {
 		jdbctemplate.update(updateStock,
 				stock.getBooksavailable(),
+				stock.getBooksissued(),
 				stock.getTitle(),
 				stock.getAuthor(),
 				stock.getPublications());
 		return stock;
 	}
-
+	
+	@Override
+	public Stock updateStockNew(Stock stock) {
+		jdbctemplate.update(updateStockNew,
+				stock.getBooksavailable(),
+				stock.getTitle(),
+				stock.getAuthor(),
+				stock.getPublications());
+		return stock;
+	}
 }

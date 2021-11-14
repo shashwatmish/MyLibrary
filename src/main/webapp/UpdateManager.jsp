@@ -41,7 +41,7 @@
 								<label>Department ID</label> <input name="deptid" type="text"
 									class="form-control" placeholder="" required>
 									<small class="form-text text-muted">Enter the ID of the department
-									you would like to work for. <a href="#">To check the list click here</a></small>
+									you would like to work for. <a href="/getdepts">To check the list click here</a></small>
 								
 							</div>
 						</div>
