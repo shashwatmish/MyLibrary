@@ -22,8 +22,10 @@ public class HomeController {
 	}*/
 	
 	public void logout(HttpSession session) {
-		// session.removeAttribute("manager");
-		// session.removeAttribute("Dept");
+		session.removeAttribute("manager");
+		session.removeAttribute("Dept");
+		session.removeAttribute("student");
+		session.removeAttribute("staff");
 		session.invalidate();
 	}
 	

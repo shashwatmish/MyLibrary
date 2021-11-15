@@ -34,6 +34,8 @@ public class ManagerController {
 	}
 	
 	public void logout(HttpSession session) {
+		session.removeAttribute("manager");
+		session.removeAttribute("Dept");
 		session.invalidate();
 	}
 	

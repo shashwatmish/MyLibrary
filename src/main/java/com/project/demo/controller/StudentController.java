@@ -33,7 +33,7 @@ public class StudentController {
 	}
 	
 	public void logout(HttpSession session) {
-		//session.removeAttribute("student");
+		session.removeAttribute("student");
 		session.invalidate();
 	}
 	

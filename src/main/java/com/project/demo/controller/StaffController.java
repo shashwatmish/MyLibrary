@@ -35,7 +35,7 @@ public class StaffController {
 	}
 	
 	public void logout(HttpSession session) {
-		// session.removeAttribute("staff");
+		session.removeAttribute("staff");
 		session.invalidate();
 	}
 	

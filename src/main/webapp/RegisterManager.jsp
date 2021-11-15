@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false"%>
 
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -84,7 +86,7 @@
 						</div>
 						
 						<div class="form-group">
-							<label>Mobile-number (don't add +91)</label> <input type="text"
+							<label>Contact-Number</label> <input type="text"
 								name="contact" class="form-control" placeholder="" >
 						</div>
 						
